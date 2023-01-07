@@ -1,13 +1,11 @@
-@keyframes nickNamePromptLoad {
+@keyframes OnLoad {
     0% {
-        /* transform: translate(0, 50px); */
         translate: 0 20px;
         opacity: 0.15;
-
     }
 }
 
-@keyframes containerOnLoad {
+@keyframes delay {
     0% {
         opacity: 0.15;
     }

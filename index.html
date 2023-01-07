@@ -48,20 +48,24 @@
     <div class="prompt">
       <form id="send-container" onsubmit="sendMessage(); return false;">
         <input autofocus type="text" id="input-send-message">
-        <button type="submit">send</button>
+        <button id="send-btn" type="submit">send</button>
       </form>
     </div>
-  </div>
-  
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      let container = document.querySelector('.container').style.display = 'none';
-    });
-  </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let container = document.querySelector('.container').style.display = 'none';
+      });
 
-  <!-- meta data -->
-  <div class="participant-count">
-    <span>Participants Joined: </span>
+      document.querySelector("#input-send-message").addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          document.getElementById('input-send-message').value = null;
+        }
+      });
+
+      document.querySelector("#send-btn").addEventListener('click', function (e) {
+        document.getElementById('input-send-message').value = null;
+      });
+    </script>
   </div>
 
 </body>
