@@ -27,6 +27,11 @@
 
 <body>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let container = document.querySelector('.container').style.display = 'none';
+    });
+  </script>
 
   <!-- nick name prompt on load -->
   <div class="nick-name-prompt">
@@ -44,28 +49,27 @@
 
   <!-- main app body -->
   <div class="container">
+
     <div id="chats"></div>
+
     <div class="prompt">
       <form id="send-container" onsubmit="sendMessage(); return false;">
         <input autofocus type="text" id="input-send-message">
         <button id="send-btn" type="submit">send</button>
       </form>
-    </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        let container = document.querySelector('.container').style.display = 'none';
-      });
+      <script>
+        document.querySelector("#input-send-message").addEventListener('keypress', function (e) {
+          if (e.key === 'Enter') {
+            document.getElementById('input-send-message').value = null;
+          }
+        });
 
-      document.querySelector("#input-send-message").addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
+        document.querySelector("#send-btn").addEventListener('click', function (e) {
           document.getElementById('input-send-message').value = null;
-        }
-      });
+        });
+      </script>
+    </div>
 
-      document.querySelector("#send-btn").addEventListener('click', function (e) {
-        document.getElementById('input-send-message').value = null;
-      });
-    </script>
   </div>
 
 </body>

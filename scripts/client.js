@@ -13,7 +13,7 @@ document
 const socket = new WebSocket(`ws://localhost:55555`);
 
 socket.onopen = () => {
-  socket.send(`Tadaaa....... ${username} joined the chat`);
+  socket.send(`${username} joined the chat`);
   console.log(username);
 };
 
