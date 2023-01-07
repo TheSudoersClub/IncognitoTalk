@@ -1,0 +1,66 @@
+.container {
+  position: absolute;
+  width: 1080px;
+  height: 500px;
+  padding: 30px 40px;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* flex-direction: column; */
+  /* background: rgba(56, 56, 56, 0.15); */
+}
+
+.chats {
+  position: absolute;
+  /* background: rgba(255, 0, 0, 0.15); */
+  width: 900px;
+  height: 550px;
+  padding: 30px 40px;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+.prompt {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prompt input {
+  outline: none;
+  width: 500px;
+  height: 45px;
+  /* padding: 16px 300px 16px 15px; */
+  padding-left: 15px;
+  padding-right: 15px;
+  border: none;
+  background: rgba(56, 56, 56, 0.15);
+  color: white;
+  caret-color: aqua;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.prompt button {
+  padding: 15px;
+  border: none;
+  background: rgba(183, 0, 255, 0.8);
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  transition: 1s;
+}
+
+.prompt button:hover {
+  background: rgba(123, 2, 172, 0.8);
+  cursor: pointer;
+}

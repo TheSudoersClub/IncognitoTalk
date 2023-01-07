@@ -1,0 +1,9 @@
+@keyframes nickNamePromptLoad
+{
+    0%{
+        /* transform: translate(0, 50px); */
+        translate: 0 20px;
+        opacity: 0.15;
+
+    }
+}

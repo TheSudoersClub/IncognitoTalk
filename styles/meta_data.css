@@ -1,0 +1,8 @@
+.participant-count {
+  position: absolute;
+  transform: translate(10%, 50%);
+}
+
+.participant-count span{
+    color: rgb(43, 43, 43);
+}

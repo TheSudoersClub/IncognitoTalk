@@ -1,0 +1,41 @@
+.nick-name-prompt {
+  display: none;
+  background: rgba(56, 56, 56, 0.15);
+  position: absolute;
+  width: 450px;
+  padding: 30px 40px;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  border: none;
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15); */
+
+  animation-name: nickNamePromptLoad;
+  animation-duration: 1s;
+}
+
+.nick-name-prompt label {
+  font-weight: bold;
+
+  color: rgba(183, 0, 255, 0.8);
+}
+
+.nick-name-prompt input {
+  margin-top: 20px;
+  display: block;
+  border: none;
+  padding: 10px 20px;
+  background: rgb(27, 27, 27);
+  /* box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.15); */
+  color: white;
+  outline: none;
+  caret-color: aqua;
+  border-radius: 5px;
+}

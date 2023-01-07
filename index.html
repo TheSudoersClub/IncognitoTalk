@@ -1,25 +1,59 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>Chat App</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- fonts  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- styles -->
+  <link rel="stylesheet" href="styles/globals.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/name_prompt.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/meta_data.css">
+
+  <!-- scripts  -->
+  <script src="scripts/client.js" defer></script>
+
+  <title>IncognitoTalk</title>
 </head>
 
 <body>
-    <div class="container">
-        <div>
-            <div id="messages"></div>
-            <div class="sendBox">
-                <form id="send-container" onsubmit="sendMessage(); return false;">
-                    <input id="message" type="text">
-                    <input onclick="clearInput()" type="submit" value="Send">
-                </form>
-            </div>
-        </div>
+
+  <!-- nick name prompt on load -->
+  <div class="nick-name-prompt">
+    <label for="input-nick-name-prompt">Enter a Nick Name</label>
+    <input autofocus type="text" id="input-nick-name-prompt">
+    <script>
+      document.querySelector("#input-nick-name-prompt").addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          document.querySelector(".nick-name-prompt").style.display = "none";
+        }
+      });
+    </script>
+  </div>
+
+  <!-- main app body -->
+  <div class="container">
+    <div class="chats">
+      fsdafsadf
     </div>
+    <div class="prompt">
+      <input autofocus type="text">
+      <button>send</button>
+    </div>
+  </div>
 
-    <script src="client.js"></script>
+  <!-- meta data -->
+  <div class="participant-count">
+    <span>Participants Joined: </span>
+  </div>
+
 </body>
-
 </html>
