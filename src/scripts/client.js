@@ -1,15 +1,6 @@
 // declarations
+const link = 'bore.pub:37107'
 var username;
-
-// Generate a random color
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
 
 document
   .querySelector("#input-nick-name-prompt")
@@ -30,7 +21,7 @@ window.onbeforeunload = function () {
 
 function initializeWebSocket() {
 
-  socket = new WebSocket(`ws://localhost:55555`);
+  socket = new WebSocket(`ws://${link}`);
 
   socket.onopen = () => {
     socket.send(`USER_JOINED: ${username}`); // send the "USER_JOINED" message to the server
@@ -74,4 +65,5 @@ function initializeWebSocket() {
 function sendMessage() {
   const message = document.getElementById("input-send-message").value;
   socket.send(`<span class="username">${username} : </span> ${message}`);
+  document.getElementById("input-send-message").value='';
 }
