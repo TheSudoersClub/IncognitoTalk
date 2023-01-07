@@ -1,0 +1,81 @@
+body {
+    background-color: rgb(0, 0, 0);
+}
+
+.container {
+    background-color: rgb(0, 0, 0);
+    color: rgb(0, 255, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+
+#messages {
+    margin-top: 4rem;
+    padding-top: 1rem;
+    flex-direction: column;
+    background-color: rgb(0, 0, 0);
+    /* background-color: rgb(18, 18, 18); */
+    color: rgb(0, 255, 0);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 50vh;
+    min-width: 45rem;
+    overflow-y: auto;
+}
+
+.sendBox {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#send-container {
+    margin-top: 0.2rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#message {
+    width: 100%;
+    background-color: rgb(26, 26, 26);
+    border: none;
+    padding: 8px;
+    color: rgb(0, 255, 0);
+}
+
+#submitBtn {}
+
+.message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    padding: 1rem 2rem;
+    background-color: rgb(26, 26, 26);
+    min-width: 8rem;
+}
+
+#messages {
+    padding: 1rem;
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        flex-direction: column;
+        background-color: yellow;
+    }
+
+    .sendBox {
+        width: 100%;
+    }
+
+    .chatBox {
+        background-color: yellow;
+        height: 20vh;
+
+    }
+}
