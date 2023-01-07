@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "nw dist/.resources/home/",
+    "prod": "nwbuild --platforms linux64, linux32 --buildDir build/ dist/.resources/home/"
+  },
+  "dependencies": {
+    "ws": "^8.11.0"
+  },
+  "devDependencies": {
+    "nw": "^0.44.1",
+    "nw-builder": "^4.0.5"
+  }
+}

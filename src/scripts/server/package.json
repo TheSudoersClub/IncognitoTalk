@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "ws": "^8.11.0"
-  },
-  "devDependencies": {
-    "nw": "^0.44.1",
-    "nw-builder": "^4.0.5"
-  }
-}
