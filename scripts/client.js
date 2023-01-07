@@ -20,13 +20,13 @@ socket.onopen = () => {
 socket.onmessage = (event) => {
   const reader = new FileReader();
   reader.addEventListener("loadend", (e) => {
-    const messages = document.getElementById("messages");
+    const messages = document.getElementById("chats");
     messages.innerHTML += `<br>${e.srcElement.result}`;
   });
   reader.readAsText(event.data);
 };
 
 function sendMessage() {
-  const message = document.getElementById("message").value;
+  const message = document.getElementById("input-send-message").value;
   socket.send(`${username}: ${message}`);
 }

@@ -20,11 +20,13 @@
 
   <!-- scripts  -->
   <script src="scripts/client.js" defer></script>
+  <script src="./scripts/load.js"></script>
 
   <title>IncognitoTalk</title>
 </head>
 
 <body>
+
 
   <!-- nick name prompt on load -->
   <div class="nick-name-prompt">
@@ -34,6 +36,7 @@
       document.querySelector("#input-nick-name-prompt").addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
           document.querySelector(".nick-name-prompt").style.display = "none";
+          let container = document.querySelector('.container').style.display = 'block';
         }
       });
     </script>
@@ -41,14 +44,20 @@
 
   <!-- main app body -->
   <div class="container">
-    <div class="chats">
-      fsdafsadf
-    </div>
+    <div id="chats"></div>
     <div class="prompt">
-      <input autofocus type="text">
-      <button>send</button>
+      <form id="send-container" onsubmit="sendMessage(); return false;">
+        <input autofocus type="text" id="input-send-message">
+        <button type="submit">send</button>
+      </form>
     </div>
   </div>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let container = document.querySelector('.container').style.display = 'none';
+    });
+  </script>
 
   <!-- meta data -->
   <div class="participant-count">
@@ -56,4 +65,5 @@
   </div>
 
 </body>
+
 </html>

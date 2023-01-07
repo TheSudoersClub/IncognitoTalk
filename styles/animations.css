@@ -1,9 +1,14 @@
-@keyframes nickNamePromptLoad
-{
-    0%{
+@keyframes nickNamePromptLoad {
+    0% {
         /* transform: translate(0, 50px); */
         translate: 0 20px;
         opacity: 0.15;
 
+    }
+}
+
+@keyframes containerOnLoad {
+    0% {
+        opacity: 0.15;
     }
 }

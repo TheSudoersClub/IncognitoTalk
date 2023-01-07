@@ -6,15 +6,17 @@
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-  /* flex-direction: column; */
+  animation-name: containerOnLoad;
+  animation-duration: 2s;
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; */
   /* background: rgba(56, 56, 56, 0.15); */
 }
 
-.chats {
-  position: absolute;
+#chats {
+  position: relative;
   /* background: rgba(255, 0, 0, 0.15); */
   width: 900px;
   height: 550px;
@@ -22,6 +24,7 @@
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
+  overflow-y: auto;
 }
 
 .prompt {
