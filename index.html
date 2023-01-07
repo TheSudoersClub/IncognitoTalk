@@ -6,6 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="assets/favicon/IncognitoTalk.png" type="image/x-icon">
+
+
   <!-- fonts  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +25,6 @@
 
   <!-- scripts  -->
   <script src="scripts/client.js" defer></script>
-  <script src="./scripts/load.js"></script>
 
   <title>IncognitoTalk</title>
 </head>
@@ -57,17 +61,7 @@
         <input autofocus type="text" id="input-send-message">
         <button id="send-btn" type="submit">send</button>
       </form>
-      <script>
-        document.querySelector("#input-send-message").addEventListener('keypress', function (e) {
-          if (e.key === 'Enter') {
-            document.getElementById('input-send-message').value = null;
-          }
-        });
-
-        document.querySelector("#send-btn").addEventListener('click', function (e) {
-          document.getElementById('input-send-message').value = null;
-        });
-      </script>
+     
     </div>
 
   </div>

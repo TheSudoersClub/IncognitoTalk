@@ -72,3 +72,27 @@
   background: rgba(123, 2, 172, 0.8);
   cursor: pointer;
 }
+
+.user-joined {
+  color: rgba(0, 68, 0, 0.8);
+  font-style: italic;
+  font-weight: 400;
+  text-align: center;
+}
+
+.user-left {
+  color: rgba(102, 0, 0, 0.8);
+  font-style: italic;
+  font-weight: 400;
+  text-align: center;
+}
+
+.username {
+  color: rgba(183, 0, 255, 0.8);
+  font-weight: bold;
+}
+
+.send-message {
+  padding: 0.2rem;
+  margin-left: 3rem;
+}
