@@ -1,5 +1,5 @@
 // declarations
-const link = 'bore.pub:37107'
+const link = 'bore.pub:38969'
 var username;
 
 document
@@ -25,6 +25,10 @@ function initializeWebSocket() {
 
   socket.onopen = () => {
     socket.send(`USER_JOINED: ${username}`); // send the "USER_JOINED" message to the server
+  };
+  socket.onclose = () => {
+    const messages = document.getElementById("chats");
+    messages.innerHTML += `<br><div class="server-terminated">⚠️ Server Terminated</div>`; // send the "USER_JOINED" message to the server
   };
 
   socket.onmessage = (event) => {
@@ -65,5 +69,5 @@ function initializeWebSocket() {
 function sendMessage() {
   const message = document.getElementById("input-send-message").value;
   socket.send(`<span class="username">${username} : </span> ${message}`);
-  document.getElementById("input-send-message").value='';
+  document.getElementById("input-send-message").value = '';
 }

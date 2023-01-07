@@ -96,3 +96,9 @@
   padding: 0.2rem;
   margin-left: 3rem;
 }
+
+.server-terminated {
+  color: rgba(102, 0, 0, 0.8);
+  font-weight: bold;
+  text-align: center;
+}
