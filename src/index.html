@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="styles/animations.css">
   <link rel="stylesheet" href="styles/meta_data.css">
   <link rel="stylesheet" href="styles/responsive.css">
- 
+
   <!-- scripts  -->
   <script src="scripts/client.js" defer></script>
 
@@ -37,30 +37,34 @@
     });
   </script>
 
-  <!-- nick name prompt on load -->
-  <div class="nick-name-prompt">
-    <label for="input-nick-name-prompt">Enter a Nick Name</label>
-    <input autofocus type="text" id="input-nick-name-prompt">
-    <script>
-      document.querySelector("#input-nick-name-prompt").addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-          document.querySelector(".nick-name-prompt").style.display = "none";
-          let container = document.querySelector('.container').style.display = 'flex';
-        }
-      });
-    </script>
-  </div>
+  <div id="root">
 
-  <!-- main app body -->
-  <div class="container">
+    <!-- nick name prompt on load -->
+    <div class="nick-name-prompt">
+      <label for="input-nick-name-prompt">Enter a Nick Name</label>
+      <input autofocus type="text" id="input-nick-name-prompt">
+      <script>
+        document.querySelector("#input-nick-name-prompt").addEventListener('keypress', function (e) {
+          if (e.key === 'Enter') {
+            document.querySelector(".nick-name-prompt").style.display = "none";
+            let container = document.querySelector('.container').style.display = 'flex';
+          }
+        });
+      </script>
+    </div>
 
-    <div id="chats" onmouseover="this.style.overflow='auto'" onmouseout="this.style.overflow='hidden'"></div>
+    <!-- main app body -->
+    <div class="container">
 
-    <div class="prompt">
-      <form id="send-container" onsubmit="sendMessage(); return false;">
-        <input autofocus type="text" id="input-send-message">
-        <button id="send-btn" type="submit">Send</button>
-      </form>
+      <div id="chats" onmouseover="this.style.overflow='auto'" onmouseout="this.style.overflow='hidden'"></div>
+
+      <div class="prompt">
+        <form id="send-container" onsubmit="sendMessage(); return false;">
+          <input autofocus type="text" id="input-send-message">
+          <button id="send-btn" type="submit">Send</button>
+        </form>
+      </div>
+
     </div>
 
   </div>

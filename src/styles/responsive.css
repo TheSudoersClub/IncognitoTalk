@@ -22,12 +22,16 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 700px) {
   .container #chats {
     width: 90vw;
   }
   .prompt input {
     width: 20rem;
+  }
+
+  .nick-name-prompt {
+    width: 350px;
   }
 }
 
@@ -38,7 +42,7 @@
   .container #chats {
     height: 80vh;
   }
-  .prompt{
+  .prompt {
     margin-top: 2.5rem;
   }
   .prompt input {
@@ -53,12 +57,20 @@
   .container #chats {
     height: 85vh;
   }
-  .prompt{
+  .prompt {
     margin-top: 3rem;
     animation-name: delay;
   }
   .prompt input {
     width: 65vw;
+  }
+
+  .nick-name-prompt {
+    width: 300px;
+    align-items: flex-start;
+  }
+  .nick-name-prompt input {
+    padding: 10px 12px;
   }
 }
 
@@ -68,9 +80,22 @@
   }
 }
 
+@media screen and (max-width: 400px) {
+  .nick-name-prompt {
+  }
+}
+
 @media screen and (max-width: 360px) {
   .prompt input {
     width: 60vw;
+  }
+  .nick-name-prompt {
+    height: 10rem;
+    width: 250px;
+  }
+  .nick-name-prompt input {
+    padding: 8px 0;
+    width: 10rem;
   }
 }
 
