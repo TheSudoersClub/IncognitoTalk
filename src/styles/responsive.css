@@ -1,0 +1,81 @@
+@media screen and (max-width: 1115px) {
+  .container #chats {
+    width: 75vw;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .container #chats {
+    width: 80vw;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container #chats {
+    width: 85vw;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .prompt input {
+    width: 25rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .container #chats {
+    width: 90vw;
+  }
+  .prompt input {
+    width: 20rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    gap: 1rem;
+  }
+  .container #chats {
+    height: 80vh;
+  }
+  .prompt{
+    margin-top: 2.5rem;
+  }
+  .prompt input {
+    width: 20rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    gap: 0;
+  }
+  .container #chats {
+    height: 85vh;
+  }
+  .prompt{
+    margin-top: 3rem;
+    animation-name: delay;
+  }
+  .prompt input {
+    width: 65vw;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .prompt input {
+    width: 62vw;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .prompt input {
+    width: 60vw;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .prompt input {
+    width: 58vw;
+  }
+}
