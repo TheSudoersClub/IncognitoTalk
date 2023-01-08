@@ -101,6 +101,63 @@ body {
   font-style: italic;
 }
 
+.create-room-prompt {
+  display: none;
+  background: rgba(56, 56, 56, 0.15);
+  position: absolute;
+  width: 450px;
+  padding: 30px 40px;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  border: none;
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  animation-name: OnLoad;
+  animation-duration: 1s;
+}
+
+.create-room-prompt span {
+  display: block;
+  color: rgb(56, 56, 56);
+  /* margin-bottom: 5px; */
+}
+
+#host-file-name{
+  display: inline;
+    font-style: italic;
+}
+
+.create-room-prompt label {
+  display: block;
+  font-weight: bold;
+   margin-top: 15px;
+  color: rgba(183, 0, 255, 0.8);
+}
+
+.create-room-prompt input {
+  margin-top: 20px;
+  display: block;
+  border: none;
+  padding: 10px 20px;
+  background: rgb(27, 27, 27);
+  /* box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.15); */
+  color: white;
+  outline: none;
+  caret-color: aqua;
+  border-radius: 5px;
+  /* 
+  animation-name: shake;
+  animation-duration: 1s; */
+}
+
+
+/* animations */
 @keyframes OnLoad {
   0% {
     translate: 0 20px;
