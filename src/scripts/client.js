@@ -1,5 +1,5 @@
 // declarations
-const link = 'bore.pub:38969'
+const link = "bore.pub:12345";
 var username;
 
 document
@@ -20,7 +20,6 @@ window.onbeforeunload = function () {
 };
 
 function initializeWebSocket() {
-
   socket = new WebSocket(`ws://${link}`);
 
   socket.onopen = () => {
@@ -35,7 +34,13 @@ function initializeWebSocket() {
     const reader = new FileReader();
 
     reader.addEventListener("loadend", (e) => {
+      document
+        .getElementById("chats")
+        .scrollTo(0, document.getElementById("chats").scrollHeight);
       const data = e.srcElement.result;
+
+      let overflow = document.getElementById("chat");
+      // overflow.scrollIntoView(false);
 
       if (data.startsWith("USER_JOINED: ")) {
         // this is a "user joined" message
@@ -56,18 +61,17 @@ function initializeWebSocket() {
         const messages = document.getElementById("chats");
 
         messages.innerHTML += `<div class="send-message">${data}</div>`;
-
       }
-
     });
-
 
     reader.readAsText(event.data);
   };
 }
 
+setInterval(ScrollDiv, 50);
+
 function sendMessage() {
   const message = document.getElementById("input-send-message").value;
-  socket.send(`<span class="username">${username} : </span> ${message}`);
-  document.getElementById("input-send-message").value = '';
+  socket.send(`<span class="username">${username} : &nbsp;</span> ${message}`);
+  document.getElementById("input-send-message").value = "";
 }

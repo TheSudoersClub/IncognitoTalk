@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.2"> -->
 
   <!-- favicon -->
   <link rel="shortcut icon" href="assets/favicon/favicon.png" type="image/x-icon">
@@ -22,7 +22,8 @@
   <link rel="stylesheet" href="styles/name_prompt.css">
   <link rel="stylesheet" href="styles/animations.css">
   <link rel="stylesheet" href="styles/meta_data.css">
-
+  <!-- <link rel="stylesheet" href="styles/responsive.css"> -->
+ 
   <!-- scripts  -->
   <script src="scripts/client.js" defer></script>
 
@@ -54,14 +55,14 @@
   <!-- main app body -->
   <div class="container">
 
-    <div id="chats"></div>
+    <div id="chats" onmouseover="this.style.overflow='auto'" onmouseout="this.style.overflow='hidden'"></div>
 
     <div class="prompt">
       <form id="send-container" onsubmit="sendMessage(); return false;">
         <input autofocus type="text" id="input-send-message">
         <button id="send-btn" type="submit">send</button>
       </form>
-     
+
     </div>
 
   </div>
