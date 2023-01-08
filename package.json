@@ -1,13 +1,22 @@
 {
+  "name": "push",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "nw dist/.resources/home/",
-    "prod": "nwbuild --platforms linux64, linux32 --buildDir build/ dist/.resources/home/"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "ws": "^8.11.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AyushAhirrao/IncognitoTalk.git"
   },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AyushAhirrao/IncognitoTalk/issues"
+  },
+  "homepage": "https://github.com/AyushAhirrao/IncognitoTalk#readme",
   "devDependencies": {
-    "nw": "^0.44.1",
-    "nw-builder": "^4.0.5"
+    "ws": "^8.12.0"
   }
 }

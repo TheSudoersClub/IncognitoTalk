@@ -80,11 +80,6 @@
   }
 }
 
-@media screen and (max-width: 400px) {
-  .nick-name-prompt {
-  }
-}
-
 @media screen and (max-width: 360px) {
   .prompt input {
     width: 60vw;
@@ -94,7 +89,7 @@
     width: 250px;
   }
   .nick-name-prompt input {
-    padding: 8px 0;
+    padding: 8px 12px;
     width: 10rem;
   }
 }
