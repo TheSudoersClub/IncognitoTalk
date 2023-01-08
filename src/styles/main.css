@@ -17,16 +17,20 @@
 #chats {
   position: relative;
   /* background: rgba(255, 0, 0, 0.15); */
-  width: 900px;
-  height: 550px;
-  padding: 30px 40px;
+  width: 800px;
+  height: 450px;
+  /* padding: 40px 40px; */
+  /* padding-top: 30px; */
   transform: translate(-50%, -50%);
   left: 50%;
-  top: 50%;
+  top: 40%;
+  overflow-wrap: break-word;
   overflow-y: auto;
+  /* overflow: hidden; */
 
   animation-name: delay;
   animation-duration: 1s;
+  /* outline: 1px solid red; */
 }
 
 .prompt {
