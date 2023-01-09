@@ -1,5 +1,5 @@
 // declarations
-const link = "bore.pub:46501";
+const link = "bore.pub:41365";
 var username;
 
 document
