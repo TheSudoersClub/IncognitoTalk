@@ -30,14 +30,13 @@
 </head>
 
 <body>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      let container = document.querySelector('.container').style.display = 'none';
-    });
-  </script>
-
   <div id="root">
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let container = document.querySelector('.container').style.display = 'none';
+      });
+    </script>
 
     <!-- nick name prompt on load -->
     <div class="nick-name-prompt">
@@ -48,7 +47,6 @@
           if (e.key === 'Enter') {
             document.querySelector(".nick-name-prompt").style.display = "none";
             let container = document.querySelector('.container').style.display = 'flex';
-            window.scrollTo(0, document.body.scrollHeight);
           }
         });
       </script>
@@ -61,7 +59,7 @@
 
       <div class="prompt">
         <form id="send-container" onsubmit="sendMessage(); return false;">
-          <input autofocus type="text" id="input-send-message">
+          <input autofocus type="text" id="input-send-message" autocomplete="off">
           <button id="send-btn" type="submit">Send</button>
         </form>
       </div>
