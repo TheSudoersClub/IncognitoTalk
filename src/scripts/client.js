@@ -1,5 +1,5 @@
 // declarations
-const link = "bore.pub:44337";
+const link = "bore.pub:46501";
 var username;
 
 document
@@ -28,19 +28,18 @@ function initializeWebSocket() {
   socket.onclose = () => {
     const messages = document.getElementById("chats");
     messages.innerHTML += `<br><div class="server-terminated">⚠️ Server Terminated</div>`; // send the "USER_JOINED" message to the server
+    scrollToBottom();
   };
 
   socket.onmessage = (event) => {
     const reader = new FileReader();
 
     reader.addEventListener("loadend", (e) => {
-      document
-        .getElementById("chats")
-        .scrollTo(0, document.getElementById("chats").scrollHeight);
+      // scroll to bottom when new message received
+      scrollToBottom();
+
       const data = e.srcElement.result;
 
-      let overflow = document.getElementById("chat");
-      // overflow.scrollIntoView(false);
 
       if (data.startsWith("USER_JOINED: ")) {
         // this is a "user joined" message
@@ -74,4 +73,10 @@ function sendMessage() {
   const message = document.getElementById("input-send-message").value;
   socket.send(`<span class="username">${username} : &nbsp;</span> ${message}`);
   document.getElementById("input-send-message").value = "";
+}
+
+function scrollToBottom() {
+  document
+    .getElementById("chats")
+    .scrollTo(0, document.getElementById("chats").scrollHeight);
 }
