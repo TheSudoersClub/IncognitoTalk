@@ -1,5 +1,5 @@
 // declarations
-const link = "bore.pub:41365";
+const link = "bore.pub:42257";
 var username;
 
 document
@@ -40,13 +40,13 @@ function initializeWebSocket() {
 
       const data = e.srcElement.result;
 
-
       if (data.startsWith("USER_JOINED: ")) {
         // this is a "user joined" message
         const username = data.slice("USER_JOINED: ".length);
         const messages = document.getElementById("chats");
 
         messages.innerHTML += `<br><div class="user-joined">${username} joined the chat</div>`;
+        playNotificationSfx();
       } //
       else if (data.startsWith("USER_LEFT: ")) {
         // this is a "user joined" message
@@ -60,6 +60,7 @@ function initializeWebSocket() {
         const messages = document.getElementById("chats");
 
         messages.innerHTML += `<div class="send-message">${data}</div>`;
+        playNotificationSfx();
       }
     });
 
@@ -79,4 +80,11 @@ function scrollToBottom() {
   document
     .getElementById("chats")
     .scrollTo(0, document.getElementById("chats").scrollHeight);
+}
+
+function playNotificationSfx() {
+  var notificationSfx = new Audio("../assets/sfx/notification-sfx-discord.mp3");
+  if (document.hidden) {
+    notificationSfx.play();
+  }
 }

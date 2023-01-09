@@ -1,5 +1,4 @@
 .nick-name-prompt {
-  display: none;
   background: rgba(56, 56, 56, 0.15);
   width: 450px;
   padding: 30px 40px;
@@ -10,6 +9,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: absolute;
 
   animation-name: OnLoad;
   animation-duration: 1s;

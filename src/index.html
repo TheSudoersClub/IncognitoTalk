@@ -30,14 +30,14 @@
 </head>
 
 <body>
+
+  <!-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let container = document.querySelector('.container').style.display = 'none';
+    });
+  </script> -->
+
   <div id="root">
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        let container = document.querySelector('.container').style.display = 'none';
-      });
-    </script>
-
     <!-- nick name prompt on load -->
     <div class="nick-name-prompt">
       <label for="input-nick-name-prompt">Enter a Nick Name</label>
@@ -46,14 +46,14 @@
         document.querySelector("#input-nick-name-prompt").addEventListener('keypress', function (e) {
           if (e.key === 'Enter') {
             document.querySelector(".nick-name-prompt").style.display = "none";
-            let container = document.querySelector('.container').style.display = 'flex';
+            document.querySelector('.container').style.display = 'flex';
           }
         });
       </script>
     </div>
 
     <!-- main app body -->
-    <div class="container">
+    <div class="container" onmouseout="changeStatus(false);">
 
       <div id="chats" onmouseover="this.style.overflow='auto'" onmouseout="this.style.overflow='hidden'"></div>
 
