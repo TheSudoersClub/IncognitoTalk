@@ -1,7 +1,7 @@
 .vscode/
-
 node_modules/
-
 link.txt
 log.txt
-
+tests/
+build/
+makefile
