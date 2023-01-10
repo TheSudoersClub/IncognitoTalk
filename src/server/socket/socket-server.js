@@ -2,7 +2,7 @@ const WebSocket = require("ws"); // Import the `ws` module
 
 const wss = new WebSocket.Server({
   // Create a new WebSocket server
-  port: 55555, // Listen on port 55555
+  port: 7772, // Listen on port 77725
 });
 
 const clients = []; // Create an array to store connected clients
@@ -28,4 +28,4 @@ wss.on("connection", (ws) => {
   });
 });
 
-console.log("listening on prot localhost:55555");
+console.log("listening on 0.0.0.0:7772");
