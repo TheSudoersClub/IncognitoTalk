@@ -6,11 +6,12 @@ const {
 function createWindow() {
     // Create the browser window.
     let win = new BrowserWindow({
-        width: 800,
+        width: 1000,
         height: 600,
+        // frame: false, // remove the titlebar
+        // titleBarStyle: 'hidden', // hide the titlebar in macOS
         webPreferences: {
-            nodeIntegration: true,
-            toolbar: false
+            nodeIntegration: true
         }
     })
 

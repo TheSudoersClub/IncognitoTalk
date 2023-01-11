@@ -11,4 +11,6 @@ socket-server:
 
 other-files: 
 	electron-packager src/home/ inct-app --platform=linux --arch=x64
-	mv -f inct-app-linux-x64/ build/home/ && cp -rf src/main/ build/
+	rm -r build/home/inct-app-linux-x64/*
+	mv inct-app-linux-x64/ build/home/
+	cp -rf src/main/ build/
