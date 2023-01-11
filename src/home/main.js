@@ -8,8 +8,7 @@ function createWindow() {
     let win = new BrowserWindow({
         width: 1000,
         height: 600,
-        // frame: false, // remove the titlebar
-        // titleBarStyle: 'hidden', // hide the titlebar in macOS
+        autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true
         }
