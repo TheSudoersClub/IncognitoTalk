@@ -6,52 +6,13 @@ const {
 
 http.createServer(function (request, response) {
 
-    if (request.url === '/') {
-        fs.readFile('../../home/index.html', function (err, data) {
-            if (err) {
-                response.writeHead(500, {
-                    'Content-Type': 'text/plain'
-                });
-                response.end('Error loading index.html');
-            } else {
-                response.writeHead(200, {
-                    'Content-Type': 'text/html'
-                });
-                response.end(data);
-            }
-        });
-    } //
-    else if (request.url.endsWith('.css')) {
-        fs.readFile(`../../home/${request.url}`, function (err, data) {
-            if (err) {
-                response.writeHead(500, {
-                    'Content-Type': 'text/plain'
-                });
-                response.end('Error loading css file');
-            } else {
-                response.writeHead(200, {
-                    'Content-Type': 'text/css'
-                });
-                response.end(data);
-            }
-        });
-    } //
-    else if (request.url.endsWith('.js')) {
-        fs.readFile(`../../home/${request.url}`, function (err, data) {
-            if (err) {
-                response.writeHead(500, {
-                    'Content-Type': 'text/plain'
-                });
-                response.end('Error loading js file');
-            } else {
-                response.writeHead(200, {
-                    'Content-Type': 'application/javascript'
-                });
-                response.end(data);
-            }
-        });
-    } // 
-    else if (request.url === '/execute-file') {
+    // Set CORS headers
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+
+    if (request.url === '/execute-file') {
         // when create room button is pressed
 
         // start socket-server locally

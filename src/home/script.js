@@ -36,7 +36,7 @@
 
  // run file when create room btn is clicked
  document.getElementById('choice-btn-create').addEventListener('click', function () {
-   fetch('/execute-file', {
+   fetch('http://localhost:7771/execute-file', {
      method: 'POST'
    });
 
@@ -45,7 +45,7 @@
  // invite link
  let inviteLink;
  document.getElementById('choice-btn-create').addEventListener('click', function () {
-   fetch('/execute-file')
+   fetch('http://localhost:7771/execute-file')
      .then((response) => response.text())
      .then((link) => {
        inviteLink = link;
