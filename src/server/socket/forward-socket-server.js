@@ -2,8 +2,10 @@ const {
     exec
 } = require('child_process');
 
+let bore = '../port-forwarding-service/bore'
+
 // prot forwarding
-exec('bore local 7772 --to bore.pub > log.txt', (error, stdout, stderr) => {
+exec(`${bore} local 7772 --to bore.pub > log.txt`, (error, stdout, stderr) => {
     if (error) {
         console.error(`Error: ${error}`);
         return;
