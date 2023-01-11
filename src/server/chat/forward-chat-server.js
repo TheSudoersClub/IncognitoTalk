@@ -3,20 +3,18 @@ const {
 } = require('child_process');
 
 
-let bore = '../port-forwarding-service/bore'
+// windows
+if (navigator.platform.indexOf("Win") != -1) {
+    // Todo
+}
 
-// prot forwarding
-exec(`${bore} local 7773 --to bore.pub > log.txt`, (error, stdout, stderr) => {
-    if (error) {
-        console.error(`Error: ${error}`);
-        return;
-    }
-    console.log(`Output: ${stdout}`);
-});
+// linux
+else if (navigator.platform.indexOf("Linux") != -1) {
 
-// after 3 seconds run above command 
-setTimeout(() => {
-    exec(`echo $(cat log.txt) | grep -o -P 'bore.pub.{0,6}' > link.txt`, (error, stdout, stderr) => {
+    let bore = '../port-forwarding-service/bore'
+
+    // prot forwarding
+    exec(`${bore} local 7773 --to bore.pub > log.txt`, (error, stdout, stderr) => {
         if (error) {
             console.error(`Error: ${error}`);
             return;
@@ -24,9 +22,9 @@ setTimeout(() => {
         console.log(`Output: ${stdout}`);
     });
 
-    // after 2 seconds run above command 
+    // after 3 seconds run above command 
     setTimeout(() => {
-        exec(`echo $(cat link.txt | grep -o -P 'bore.pub:.{0,6}') > link.txt`, (error, stdout, stderr) => {
+        exec(`echo $(cat log.txt) | grep -o -P 'bore.pub.{0,6}' > link.txt`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${error}`);
                 return;
@@ -34,6 +32,22 @@ setTimeout(() => {
             console.log(`Output: ${stdout}`);
         });
 
-    }, 2000);
+        // after 2 seconds run above command 
+        setTimeout(() => {
+            exec(`echo $(cat link.txt | grep -o -P 'bore.pub:.{0,6}') > link.txt`, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error}`);
+                    return;
+                }
+                console.log(`Output: ${stdout}`);
+            });
 
-}, 3000);
+        }, 2000);
+
+    }, 3000);
+}
+
+// OS X
+else if (navigator.platform.indexOf("Mac") != -1) {
+    // Todo
+}

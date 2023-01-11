@@ -4,6 +4,7 @@ const {
     exec
 } = require('child_process');
 
+
 http.createServer(function (request, response) {
 
     // Set CORS headers
@@ -11,51 +12,63 @@ http.createServer(function (request, response) {
     response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
     response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-
+    // when create room button is pressed
     if (request.url === '/execute-file') {
-        // when create room button is pressed
 
-        // start socket-server locally
-        exec('cd ../socket/ &&  ./socket-server-linux', (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error: ${error}`);
-                return;
-            }
-            console.log(`Output: ${stdout}`);
+        // windows
+        if (navigator.platform.indexOf("Win") != -1) {
+            // todo 
+        }
 
-        });
+        // linux
+        else if (navigator.platform.indexOf("Linux") != -1) {
 
-        // forward socket-server port
-        exec('cd ../socket/ &&  ./forward-socket-server-linux', (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error: ${error}`);
-                return;
-            }
-            console.log(`Output: ${stdout}`);
+            // start socket-server locally
+            exec('cd ../socket/ &&  ./socket-server-linux', (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error}`);
+                    return;
+                }
+                console.log(`Output: ${stdout}`);
 
-        });
+            });
+
+            // forward socket-server port
+            exec('cd ../socket/ &&  ./forward-socket-server-linux', (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error}`);
+                    return;
+                }
+                console.log(`Output: ${stdout}`);
+
+            });
 
 
-        // start chat-server locally
-        exec('cd ../chat/ &&  ./chat-server-linux', (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error: ${error}`);
-                return;
-            }
-            console.log(`Output: ${stdout}`);
+            // start chat-server locally
+            exec('cd ../chat/ &&  ./chat-server-linux', (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error}`);
+                    return;
+                }
+                console.log(`Output: ${stdout}`);
 
-        });
+            });
 
-        // forward chat-server port
-        exec('cd ../chat/ &&  ./forward-chat-server-linux', (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error: ${error}`);
-                return;
-            }
-            console.log(`Output: ${stdout}`);
+            // forward chat-server port
+            exec('cd ../chat/ &&  ./forward-chat-server-linux', (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error}`);
+                    return;
+                }
+                console.log(`Output: ${stdout}`);
 
-        });
+            });
+        }
 
+        // OS X
+        else if (navigator.platform.indexOf("Mac") != -1) {
+            // todo 
+        }
 
         // read invite link
         setTimeout(() => {
@@ -70,7 +83,8 @@ http.createServer(function (request, response) {
 
             });
         }, 7000);
-    } //
+    }
+    //
     else {
         response.writeHead(404, {
             'Content-Type': 'text/plain'
