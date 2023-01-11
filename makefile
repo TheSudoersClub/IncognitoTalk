@@ -10,4 +10,5 @@ socket-server:
 	pkg src/server/socket/socket-server.js && mv socket-server-* build/server/socket/ && pkg src/server/socket/forward-socket-server.js && mv forward-socket-server-* build/server/socket/
 
 other-files: 
-	cp -rf src/home/inct-app-linux-x64 build/home/ && cp -rf src/main/ build/
+	electron-packager src/home/ inct-app --platform=linux --arch=x64
+	mv -f inct-app-linux-x64/ build/home/ && cp -rf src/main/ build/
