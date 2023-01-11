@@ -1,15 +1,17 @@
 const {
     exec
 } = require('child_process');
+const os = require('os');
+const platform = os.platform();
 
 
 // windows
-if (navigator.platform.indexOf("Win") != -1) {
+if (platform === 'win32') {
     // Todo 
 }
 
 // linux
-else if (navigator.platform.indexOf("Linux") != -1) {
+else if (platform === 'linux') {
 
     let bore = '../port-forwarding-service/bore'
 
@@ -60,6 +62,6 @@ else if (navigator.platform.indexOf("Linux") != -1) {
 }
 
 // OS X
-else if (navigator.platform.indexOf("Mac") != -1) {
+else if (platform === 'darwin') {
     // Todo 
 }

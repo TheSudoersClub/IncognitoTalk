@@ -1,5 +1,7 @@
 const http = require('http');
 const fs = require('fs');
+const os = require('os');
+const platform = os.platform();
 const {
     exec
 } = require('child_process');
@@ -16,12 +18,12 @@ http.createServer(function (request, response) {
     if (request.url === '/execute-file') {
 
         // windows
-        if (navigator.platform.indexOf("Win") != -1) {
+        if (platform === 'win32') {
             // todo 
         }
 
         // linux
-        else if (navigator.platform.indexOf("Linux") != -1) {
+        else if (platform === 'linux') {
 
             // start socket-server locally
             exec('cd ../socket/ &&  ./socket-server-linux', (error, stdout, stderr) => {
@@ -66,13 +68,12 @@ http.createServer(function (request, response) {
         }
 
         // OS X
-        else if (navigator.platform.indexOf("Mac") != -1) {
+        else if (platform === 'darwin') {
             // todo 
         }
 
         // read invite link
         setTimeout(() => {
-            const fs = require('fs');
             fs.readFile('../chat/link.txt', 'utf8', (err, data) => {
                 if (err) throw err;
 
