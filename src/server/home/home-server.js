@@ -55,7 +55,7 @@ http.createServer(function (request, response) {
         // when create room button is pressed
 
         // start socket-server locally
-        exec('cd ../socket/ && node socket-server.js', (error, stdout, stderr) => {
+        exec('cd ../socket/ &&  ./socket-server-linux', (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${error}`);
                 return;
@@ -65,7 +65,7 @@ http.createServer(function (request, response) {
         });
 
         // forward socket-server port
-        exec('cd ../socket/ && node forward-socket-server.js', (error, stdout, stderr) => {
+        exec('cd ../socket/ &&  ./forward-socket-server-linux', (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${error}`);
                 return;
@@ -76,7 +76,7 @@ http.createServer(function (request, response) {
 
 
         // start chat-server locally
-        exec('cd ../chat/ && node chat-server.js', (error, stdout, stderr) => {
+        exec('cd ../chat/ &&  ./chat-server-linux', (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${error}`);
                 return;
@@ -86,7 +86,7 @@ http.createServer(function (request, response) {
         });
 
         // forward chat-server port
-        exec('cd ../chat/ && node forward-chat-server.js', (error, stdout, stderr) => {
+        exec('cd ../chat/ &&  ./forward-chat-server-linux', (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${error}`);
                 return;

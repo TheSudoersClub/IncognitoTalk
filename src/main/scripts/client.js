@@ -1,7 +1,9 @@
 // declarations
-const link = "bore.pub:39757";
+const socketLink = '';
+
 var username;
 
+console.log('hellowrld', socketLink)
 document
   .querySelector("#input-nick-name-prompt")
   .addEventListener("keypress", function (e) {
@@ -20,7 +22,7 @@ window.onbeforeunload = function () {
 };
 
 function initializeWebSocket() {
-  socket = new WebSocket(`ws://${link}`);
+  socket = new WebSocket(`ws://${socketLink}`);
 
   socket.onopen = () => {
     socket.send(`USER_JOINED: ${username}`); // send the "USER_JOINED" message to the server

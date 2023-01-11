@@ -4,7 +4,7 @@ const {
 
 
 // start server for home page
-exec('cd src/server/home/ && node home-server.js', (error, stdout, stderr) => {
+exec('cd IncognitoTalk/server/home/ && ./home-server-linux', (error, stdout, stderr) => {
     if (error) {
         console.error(`Error: ${error}`);
         return;

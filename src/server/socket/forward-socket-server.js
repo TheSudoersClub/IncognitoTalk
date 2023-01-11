@@ -23,7 +23,7 @@ setTimeout(() => {
 
     // after 2 seconds run above command 
     setTimeout(() => {
-        exec(`echo $(cat link.txt | grep -o -P ':.{0,6}') > link.txt`, (error, stdout, stderr) => {
+        exec(`echo $(cat link.txt | grep -o -P 'bore.pub:.{0,6}') > link.txt`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${error}`);
                 return;
@@ -33,7 +33,7 @@ setTimeout(() => {
 
         // after 2 seconds run above command 
         setTimeout(() => {
-            exec(`sed -i \"s/bore.pub:\\(.\\{5\\}\\)/bore.pub$(cat link.txt)/\" ../../main/scripts/client.js`, (error, stdout, stderr) => {
+            exec(`sed -i "s|socketLink = '.*'|socketLink = '$(cat link.txt)'|" ../../main/scripts/client.js`, (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Error: ${error}`);
                     return;
