@@ -12,7 +12,7 @@ body {
   color: white;
 }
 
-.container{
+.container {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -114,9 +114,6 @@ body {
   position: absolute;
   width: 450px;
   padding: 30px 40px;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
   border: none;
   border-radius: 8px;
 
@@ -132,37 +129,121 @@ body {
 .create-room-prompt span {
   display: block;
   color: rgb(56, 56, 56);
-  /* margin-bottom: 5px; */
+  margin-top: 5px;
 }
 
-#host-file-name{
-  display: inline;
-    font-style: italic;
+.create-room-prompt .processing_animation_element {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border-right: solid 10px aqua;
+  border-bottom: solid 10px rgb(56, 56, 56);
+  border-left: solid 10px rgb(56, 56, 56);
+  border-top: solid 10px rgb(56, 56, 56);
+  animation: processing 1s infinite;
 }
 
-.create-room-prompt label {
-  display: block;
-  font-weight: bold;
-   margin-top: 15px;
-  color: rgba(183, 0, 255, 0.8);
+.generate-invite-link{
+  animation-name: delay;
+  animation-duration: 1s;
 }
 
-.create-room-prompt input {
-  margin-top: 20px;
-  display: block;
-  border: none;
-  padding: 10px 20px;
-  background: rgb(27, 27, 27);
-  /* box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.15); */
-  color: white;
-  outline: none;
-  caret-color: aqua;
+.create-room-invite-link {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.copy-link {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-link img {
+  width: 30px;
+  filter: invert(0.2);
+}
+
+.copy-link:hover {
+  cursor: pointer;
+}
+
+.copy-link::before {
+  content: "Copied";
+  position: absolute;
+  top: 8px;
+  right: 80px;
+  background: grey;
+  padding: 6px 8px;
   border-radius: 5px;
-  /* 
-  animation-name: shake;
-  animation-duration: 1s; */
+  font-size: 10px;
+  animation-name: delay;
+  animation-duration: 0.3s;
+  display: none;
 }
 
+.copy-link::after {
+  content: "";
+  position: absolute;
+  top: 25px;
+  right: 100px;
+  width: 10px;
+  height: 10px;
+  background: gray;
+  transform: rotate(45deg);
+  animation-name: delay;
+  animation-duration: 0.3s;
+  display: none;
+}
+
+.copy-link.active div::before,
+.copy-link.active div::after {
+  display: block;
+}
+
+.div-invite-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.div-invite-link span {
+  background: rgba(56, 56, 56, 0.15);
+  padding: 12px 60px;
+  color: white;
+  border-radius: 8px;
+}
+
+.create-room-message {
+  margin-top: 15px;
+  color: rgb(56, 56, 56);
+  margin-bottom: 15px;
+}
+
+.create-room-join-btn {
+  margin-top: 10px;
+  /* outline: 1px solid aqua; */
+  animation-name: join-room-btn;
+  animation-duration: 1s;
+  transition: 1s;
+}
+
+.create-room-join-btn button {
+  border: none;
+  color: white;
+  background: rgba(183, 0, 255, 0.8);
+  padding: 12px 16px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.create-room-join-btn :hover {
+  cursor: pointer;
+  box-shadow: 1px 1px 18px rgba(183, 0, 255, 0.5);
+}
 
 /* animations */
 @keyframes OnLoad {
@@ -190,5 +271,23 @@ body {
   }
   40% {
     transform: translateX(1px);
+  }
+}
+
+@keyframes processing {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes join-room-btn {
+  from {
+    display: none;
+  }
+  to {
+    display: block;
   }
 }

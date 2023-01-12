@@ -30,14 +30,29 @@
         <span>Invalid Link</span>
       </div>
     </div>
-    <!-- 
+
     <div class="create-room-prompt">
-      <span>Execute the <span id="host-file-name">host-room</span> file to start a server</span>
-      <span>The script will establish a server and provide with a invite link through which other participants can
-        join.</span>
-      <label for="input-crete-room-prompt">Enter the Invite Link</label>
-      <input autofocus type="text" id="input-crete-room-prompt">
-    </div> -->
+      <div class="processing_animation">
+        <div class="processing_animation_element"></div>
+        <span>Creating room...</span>
+      </div>
+      <div class="generate-invite-link">
+        <div class="create-room-invite-link">
+          <div class="div-invite-link">
+            <span id="invite-link"></span>
+          </div>
+          <div class="copy-link">
+            <img id="copy-icon" src="assets/copy-icon.svg" alt="copy">
+          </div>
+        </div>
+        <div class="create-room-message">
+          The server has been successfully established. Above is an invite link for your room through which other participants can join.
+        </div>
+        <div class="create-room-join-btn">
+          <button id="create-room-join-button" onclick="joinRoom()">Join Room</button>
+        </div>
+      </div>
+    </div>
 
   </div>
 
