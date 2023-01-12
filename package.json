@@ -19,5 +19,8 @@
   "devDependencies": {
     "electron-packager": "^17.1.1",
     "ws": "^8.12.0"
+  },
+  "dependencies": {
+    "url-exists": "^1.0.3"
   }
 }

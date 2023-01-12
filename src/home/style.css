@@ -171,21 +171,24 @@ body {
   cursor: pointer;
 }
 
-.copy-link::before {
-  content: "Copied";
+.copied-message {
   position: absolute;
   top: 8px;
-  right: 80px;
-  background: grey;
-  padding: 6px 8px;
+  right: 70px;
+  background: rgb(41, 41, 41);
+  padding: 5px 8px;
   border-radius: 5px;
   font-size: 10px;
-  animation-name: delay;
-  animation-duration: 0.3s;
+  animation-name: copy-message;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
   display: none;
 }
+.copied-message span{
+  color: white;
+}
 
-.copy-link::after {
+/* .copy-link::after {
   content: "";
   position: absolute;
   top: 25px;
@@ -197,12 +200,7 @@ body {
   animation-name: delay;
   animation-duration: 0.3s;
   display: none;
-}
-
-.copy-link.active div::before,
-.copy-link.active div::after {
-  display: block;
-}
+} */
 
 .div-invite-link {
   display: flex;
@@ -283,11 +281,14 @@ body {
   }
 }
 
-@keyframes join-room-btn {
-  from {
-    display: none;
+@keyframes copy-message {
+  0% {
+    opacity: 0.15;
   }
-  to {
-    display: block;
+  50%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
   }
 }

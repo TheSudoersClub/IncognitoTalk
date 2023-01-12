@@ -11,8 +11,9 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^22.0.1",
-    "electron-builder": "^23.6.0",
-    "electron-packager": "^17.1.1"
+    "electron-builder": "^22.10.3",
+    "electron-packager": "^17.1.1",
+    "url-exists": "^1.0.3"
   },
   "build": {
     "appId": "com.yourCompany.yourAppName",

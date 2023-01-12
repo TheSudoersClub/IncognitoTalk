@@ -71,22 +71,18 @@ document
   });
 
 async function displayInviteLink() {
-  await sleep(10);
+  await sleep(0);
   document.querySelector(".processing_animation").style.display = "none";
   document.getElementById("invite-link").innerHTML = "http://" + inviteLink;
   document.querySelector(".generate-invite-link").style.display = "block";
 }
 
 //copylink
-// document.addEventListener("DOMContentLoaded", function () {
-//   let copy = document.querySelector(".div-invite-link");
-//   copy.querySelector("#copy-icon").addEventListener("click", function () {
-
-//     $("#subtotal").text();
-//     navigator.clipboard.writeText(input.innerText);
-//     copy.classList.add("active");
-//   });
-// });
+function copyToClipboard(id) {
+  let value = document.getElementById(id).innerHTML
+  navigator.clipboard.writeText(value);
+  document.querySelector('.copied-message').style.display="block";
+}
 
 //join hosted room
 function joinRoom() {

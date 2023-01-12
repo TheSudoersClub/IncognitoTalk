@@ -42,11 +42,13 @@
             <span id="invite-link"></span>
           </div>
           <div class="copy-link">
-            <img id="copy-icon" src="assets/copy-icon.svg" alt="copy">
+            <div class="copied-message"><span>Copied</span></div>
+            <img id="copy-icon" onclick="copyToClipboard('invite-link')" src="assets/copy-icon.svg" alt="copy">
           </div>
         </div>
         <div class="create-room-message">
-          The server has been successfully established. Above is an invite link for your room through which other participants can join.
+          The server has been successfully established. Above is an invite link for your room through which other
+          participants can join.
         </div>
         <div class="create-room-join-btn">
           <button id="create-room-join-button" onclick="joinRoom()">Join Room</button>
