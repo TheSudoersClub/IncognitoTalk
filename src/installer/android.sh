@@ -6,7 +6,7 @@ STARTSERVER() {
     # .IncognitoTalk/server/home/home-server-linux &
     cd .IncognitoTalk && node run.js &
     sleep 10 && LINK=$(cat .IncognitoTalk/src/server/chat/link.txt)
-    echo "Invite link: $LINK" && echo
+    echo "Invite link: http://$LINK" && echo
     echo "N: Do not close the appliction unless you want to terminate the server"
     read
 }
