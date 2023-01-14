@@ -6,7 +6,6 @@ const {
     exec
 } = require('child_process');
 
-
 http.createServer(function (request, response) {
 
     // Set CORS headers

@@ -24,9 +24,6 @@ body {
   width: 500px;
   height: 300px;
   padding: 30px 40px;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
   background: rgba(56, 56, 56, 0.15);
   border: none;
   border-radius: 5px;
@@ -143,7 +140,7 @@ body {
   animation: processing 1s infinite;
 }
 
-.generate-invite-link{
+.generate-invite-link {
   animation-name: delay;
   animation-duration: 1s;
 }
@@ -184,7 +181,7 @@ body {
   animation-fill-mode: forwards;
   display: none;
 }
-.copied-message span{
+.copied-message span {
   color: white;
 }
 
@@ -285,10 +282,67 @@ body {
   0% {
     opacity: 0.15;
   }
-  50%{
+  50% {
     opacity: 1;
   }
-  100%{
+  100% {
     opacity: 0;
+  }
+}
+
+/* responsive  */
+
+@media screen and (max-width: 585px) {
+  .join-link-prompt {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .choice {
+    width: 400px;
+  }
+  .join-link-prompt {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .create-room-prompt {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .choice {
+    width: 300px;
+  }
+
+  .choice button {
+    width: 150px;
+  }
+  .join-link-prompt {
+    width: 250px;
+    padding-left: 20px;
+  }
+
+  .join-link-prompt input {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .create-room-prompt {
+    width: 350px;
+  }
+}
+
+@media screen and (max-width: 385px) {
+  .create-room-prompt {
+    width: 300px;
+  }
+
+  .div-invite-link span{
+    padding: 12px 40px;
   }
 }

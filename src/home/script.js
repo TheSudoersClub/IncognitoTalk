@@ -71,7 +71,7 @@ document
   });
 
 async function displayInviteLink() {
-  await sleep(0);
+  await sleep(10);
   document.querySelector(".processing_animation").style.display = "none";
   document.getElementById("invite-link").innerHTML = "http://" + inviteLink;
   document.querySelector(".generate-invite-link").style.display = "block";
