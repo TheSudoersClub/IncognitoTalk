@@ -3,7 +3,6 @@
 ALL_SET=0
 
 STARTSERVER() {
-    # .IncognitoTalk/server/home/home-server-linux &
     cd .IncognitoTalk && node run.js &
     sleep 10 && LINK=$(cat .IncognitoTalk/src/server/chat/link.txt)
     echo "Invite link: http://$LINK" && echo
@@ -13,7 +12,7 @@ STARTSERVER() {
 
 clear
 
-if [[ -d ".IncognitoTalk" && $(which bore) != ' ' && $(which python) != ' ' ]]; then
+if [[ -d ".IncognitoTalk" && $(which bore) != ' ' && $(which nodejs-lts) != ' ' && $(which wget) != ' ' ]]; then
     ALL_SET=1
 else
     clear
@@ -23,12 +22,11 @@ else
 
     if [[ $CHOICE == 'Y' ]]; then
         pkg install bore -y
-        pkg install python -y
+        pkg install wget -y
         pkg install nodejs-lts -y
         npm install ws --global
-        pip install gdown && clear
 
-        mkdir ".IncognitoTalk" && cd ".IncognitoTalk" && gdown https://drive.google.com/uc?id=1758nd2esX2Zv2DXOQ1jhU8osqFezmZr8
+        mkdir ".IncognitoTalk" && cd ".IncognitoTalk" && wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=1758nd2esX2Zv2DXOQ1jhU8osqFezmZr8' -O 'IncognitoTalk_Android.zip'
         unzip "IncognitoTalk_Android.zip" && rm IncognitoTalk_Android.zip && cd ..
         chmod +x ".IncognitoTalk" -R
         ALL_SET=1
