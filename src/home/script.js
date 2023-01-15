@@ -76,19 +76,21 @@ function copyToClipboard(id) {
   document.querySelector(".copied-message").style.display = "block";
 }
 
-//join hosted room
-function joinRoom() {
-  window.open(`http://${inviteLink}`, "_self");
-}
 
-async function sleep(s) {
-  return new Promise((resolve) => setTimeout(resolve, s * 1000));
-}
+async function copyToClipboardAndroid(id) {
+  let value = document.getElementById(id).innerHTML;
 
-function copyToClipboardAndroid() {
-  let value = document.getElementById("android-command").innerHTML;
-  // document.write(value)
-  // navigator.clipboard.writeText(value);
+  let tempInput = document.createElement("input");
+  tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+  tempInput.value = value;
+
+  document.body.appendChild(tempInput);
+
+  tempInput.select();
+
+  document.execCommand("copy");
+  document.body.removeChild(tempInput);
+
 
   document.querySelector("#create-room-android-copy-button").innerHTML =
     "Copied";
@@ -97,4 +99,13 @@ function copyToClipboardAndroid() {
     document.querySelector(".create-room-prompt-mobile").style.display = "none";
     document.querySelector(".join-link-prompt").style.display = "block";
   }, 5000);
+}
+
+//join hosted room
+function joinRoom() {
+  window.open(`http://${inviteLink}`, "_self");
+}
+
+async function sleep(s) {
+  return new Promise((resolve) => setTimeout(resolve, s * 1000));
 }
