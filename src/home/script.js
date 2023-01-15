@@ -1,12 +1,3 @@
-// hide other divs onload
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelector(".join-link-prompt").style.display = "none";
-  document.querySelector(".create-room-prompt").style.display = "none";
-  document.querySelector(".processing_animation").style.display = "none";
-  document.querySelector(".generate-invite-link").style.display = "none";
-  document.querySelector(".create-room-prompt-mobile").style.display = "none";
-});
-
 // invite link
 let inviteLink;
 
@@ -76,9 +67,9 @@ function copyToClipboard(id) {
   document.querySelector(".copied-message").style.display = "block";
 }
 
-
 async function copyToClipboardAndroid(id) {
   let value = document.getElementById(id).innerHTML;
+  value = $("<textarea />").html(value).text();
 
   let tempInput = document.createElement("input");
   tempInput.style = "position: absolute; left: -1000px; top: -1000px";
@@ -90,7 +81,6 @@ async function copyToClipboardAndroid(id) {
 
   document.execCommand("copy");
   document.body.removeChild(tempInput);
-
 
   document.querySelector("#create-room-android-copy-button").innerHTML =
     "Copied";

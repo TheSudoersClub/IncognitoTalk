@@ -6,11 +6,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <script src="clipboardtext.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <title>IncognitoTalk</title>
 </head>
 
 <body>
+  <script>
+    // hide other divs onload
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelector(".join-link-prompt").style.display = "none";
+      document.querySelector(".create-room-prompt").style.display = "none";
+      document.querySelector(".processing_animation").style.display = "none";
+      document.querySelector(".generate-invite-link").style.display = "none";
+      document.querySelector(".create-room-prompt-mobile").style.display = "none";
+    });
+  </script>
 
   <div class="container">
 

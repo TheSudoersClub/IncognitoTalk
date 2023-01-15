@@ -141,6 +141,7 @@ body {
 }
 
 .generate-invite-link {
+  display: none;
   animation-name: delay;
   animation-duration: 1s;
 }
