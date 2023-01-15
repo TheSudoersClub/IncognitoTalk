@@ -240,6 +240,61 @@ body {
   box-shadow: 1px 1px 18px rgba(183, 0, 255, 0.5);
 }
 
+.create-room-prompt-mobile {
+  display: none;
+  background: rgba(56, 56, 56, 0.15);
+  position: absolute;
+  width: 450px;
+  padding: 30px 40px;
+  border: none;
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  animation-name: OnLoad;
+  animation-duration: 1s;
+}
+
+.crate-room-mobile-description {
+  overflow-wrap: break-word;
+}
+
+.crate-room-mobile-description p {
+  color: rgb(56, 56, 56);
+}
+
+.crate-room-mobile-description #if-not-installed-message {
+  margin-top: 10px;
+}
+
+.crate-room-mobile-description .div-android-command {
+  margin-top: 1rem;
+  background: rgba(56, 56, 56, 0.15);
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.crate-room-mobile-description .div-android-command #android-command {
+  font-family: monospace;
+}
+
+.crate-room-mobile-description button {
+  border: none;
+  color: white;
+  background: rgba(183, 0, 255, 0.8);
+  padding: 12px 16px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.crate-room-mobile-description button:hover {
+  cursor: pointer;
+  box-shadow: 1px 1px 18px rgba(183, 0, 255, 0.5);
+}
+
 /* animations */
 @keyframes OnLoad {
   0% {
@@ -311,6 +366,10 @@ body {
   .create-room-prompt {
     width: 400px;
   }
+
+  .create-room-prompt-mobile {
+    width: 400px;
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -329,6 +388,10 @@ body {
   .join-link-prompt input {
     width: 200px;
   }
+
+  .create-room-prompt-mobile {
+    width: 300px;
+  }
 }
 
 @media screen and (max-width: 420px) {
@@ -342,7 +405,13 @@ body {
     width: 300px;
   }
 
-  .div-invite-link span{
+  .div-invite-link span {
     padding: 12px 40px;
+  }
+}
+
+@media screen and (max-width: 335px) {
+  .create-room-prompt-mobile {
+    width: 250px;
   }
 }

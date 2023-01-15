@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <script src="clipboardtext.js"></script>
   <title>IncognitoTalk</title>
 </head>
 
@@ -53,6 +54,19 @@
         <div class="create-room-join-btn">
           <button id="create-room-join-button" onclick="joinRoom()">Join Room</button>
         </div>
+      </div>
+    </div>
+
+    <div class="create-room-prompt-mobile">
+      <div class="crate-room-mobile-description">
+        <p>To host a room on android, execute the following command in the termux application. The script will establish
+          a server and provide with an invite link through which other participants can join.</p>
+        <p id="if-not-installed-message">(If not already, install the termux app form play store)</p>
+        <div class="div-android-command">
+          <span id="android-command">bash <(curl -s
+              https://raw.githubusercontent.com/TheSudoersClub/IncognitoTalk/main/src/installer/android.sh)</span>
+        </div>
+        <button id="create-room-android-copy-button" onclick="copyToClipboardAndroid()">Copy</button>
       </div>
     </div>
 
