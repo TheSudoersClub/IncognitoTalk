@@ -7,7 +7,28 @@ const platform = os.platform();
 
 // windows
 if (platform === 'win32') {
-    // Todo
+
+    let bore = '..\\port-forwarding-service\\bore.exe'
+
+    // prot forwarding
+    exec(`${bore} local 7773 --to bore.pub > log.txt`, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error: ${error}`);
+            return;
+        }
+        console.log(`Output: ${stdout}`);
+    });
+
+    // after 3 seconds run above command 
+    setTimeout(() => {
+        exec(`powershell -Command "(Select-String -Path log.txt -Pattern 'bore.pub:[0-9]{5}' -AllMatches).Matches.Value | Out-File link.txt"`, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error: ${error}`);
+                return;
+            }
+            console.log(`Output: ${stdout}`);
+        });
+    }, 5000);
 }
 
 // linux

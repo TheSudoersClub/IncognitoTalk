@@ -3,7 +3,6 @@ const socketLink = '';
 
 var username;
 
-console.log('hellowrld', socketLink)
 document
   .querySelector("#input-nick-name-prompt")
   .addEventListener("keypress", function (e) {
@@ -70,7 +69,6 @@ function initializeWebSocket() {
   };
 }
 
-setInterval(ScrollDiv, 50);
 
 function sendMessage() {
   const message = document.getElementById("input-send-message").value;

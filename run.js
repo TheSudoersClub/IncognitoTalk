@@ -8,7 +8,26 @@ const platform = os.platform();
 
 // windows
 if (platform === 'win32') {
-    // Todo
+    console.log(platform)
+
+    // start server for home page
+    exec('cd build\\server\\home\\ && .\\home-server-win.exe', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error: ${error}`);
+            return;
+        }
+    });
+    // start app 
+    exec('build\\home\\inct-app-win32-x64\\inct-app.exe', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error: ${error}`);
+            return;
+        }
+
+    });
+    setTimeout(() => {
+
+    }, 2000);
 }
 
 // Linux
@@ -21,7 +40,6 @@ else if (platform === 'linux') {
             console.error(`Error: ${error}`);
             return;
         }
-        console.log(`Output: ${stdout}`);
     });
     // start app 
     exec('build/home/inct-app-linux-x64/inct-app', (error, stdout, stderr) => {
@@ -29,7 +47,6 @@ else if (platform === 'linux') {
             console.error(`Error: ${error}`);
             return;
         }
-        console.log(`Output: ${stdout}`);
 
     });
     setTimeout(() => {
