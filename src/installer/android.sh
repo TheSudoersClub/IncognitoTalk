@@ -1,5 +1,3 @@
-#! /data/data/com.termux/files/usr/bin/bash
-
 ALL_SET=0
 
 STARTSERVER() {
