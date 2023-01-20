@@ -23,6 +23,7 @@ else
     if [[ $CHOICE == 'Y' ]]; then
         pkg install bore -y
         pkg install wget -y
+        pkg install curl -y
         pkg install nodejs-lts -y
         npm install ws --global
 
