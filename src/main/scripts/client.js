@@ -94,11 +94,13 @@ const sendMessage = () => {
   // get the message from user 
   const message = document.getElementById("input-send-message").value;
 
-  // sent message to socket server 
-  socket.send(`<span class="username">${username} : &nbsp;</span> ${message}`);
+  if (message != "") {
+    // sent message to socket server 
+    socket.send(`<span class="username">${username} : &nbsp;</span> ${message}`);
 
-  // clear the input when message is send 
-  document.getElementById("input-send-message").value = "";
+    // clear the input when message is send 
+    document.getElementById("input-send-message").value = "";
+  }
 }
 
 const scrollToBottom = () => {
