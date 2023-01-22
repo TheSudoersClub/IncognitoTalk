@@ -1,5 +1,5 @@
 // declarations
-const socketLink = '';
+const socketLink = 'localhost:7772';
 
 var username;
 

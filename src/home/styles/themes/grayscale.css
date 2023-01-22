@@ -1,0 +1,36 @@
+.choice button {
+  background: rgb(22, 22, 22);
+  border: 1px solid rgb(99, 99, 99);
+}
+
+.choice button:hover {
+  background: rgb(99, 99, 99, 0.15);
+  box-shadow: none;
+}
+
+.join-link-prompt label {
+  color: rgb(99, 99, 99);
+}
+
+.create-room-prompt .processing_animation_element {
+  border-right: solid 10px rgb(99, 99, 99);
+}
+
+.create-room-prompt-mobile button {
+  background: rgb(22, 22, 22);
+  border: 1px solid rgb(99, 99, 99);
+}
+.create-room-prompt-mobile button:hover {
+  background: rgb(99, 99, 99, 0.15);
+  box-shadow: none;
+}
+
+.generate-invite-link button {
+  background: rgb(22, 22, 22);
+  border: 1px solid rgb(99, 99, 99);
+}
+
+.generate-invite-link button:hover {
+  background: rgb(99, 99, 99, 0.15);
+  box-shadow: none;
+}

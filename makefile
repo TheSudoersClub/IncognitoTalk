@@ -33,6 +33,3 @@ compile-home-app:
 	rm -r build/home/inct-app-win32-x64/
 	mv inct-app-win32-x64/ build/home/
 
-
-
-	
