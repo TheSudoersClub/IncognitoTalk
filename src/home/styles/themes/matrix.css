@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+  font-family: "Courier New", Courier, monospace;
+}
+
+body {
+  background: black;
+}
+
+.choice {
+  background: black;
+}
+
+.choice button {
+  background: rgb(0, 255, 0);
+  /* border: 1px solid rgb(99, 99, 99); */
+  color: black;
+  font-weight: 400;
+  box-shadow: 1px 1px 20px rgba(0, 255, 0, 0.5);
+}
+
+.choice button:hover {
+  box-shadow: 1px 1px 25px rgba(0, 255, 0, 0.8);
+}
+
+.join-link-prompt {
+  background: rgb(5, 5, 5);
+}
+
+.join-link-prompt input {
+  background: rgb(10, 10, 10);
+  caret-color: rgb(0, 255, 0);
+}
+
+.join-link-prompt label {
+  color: rgb(0, 255, 0);
+  text-shadow: 1px 1px 20px rgba(0, 255, 0, 0.5);
+}
+
+.create-room-prompt .processing_animation_element {
+  border-right: solid 10px rgb(99, 99, 99);
+}
+
+.create-room-prompt-mobile button {
+  background: rgb(22, 22, 22);
+  border: 1px solid rgb(99, 99, 99);
+}
+.create-room-prompt-mobile button:hover {
+  background: rgb(99, 99, 99, 0.15);
+  box-shadow: none;
+}
+
+.generate-invite-link button {
+  background: rgb(22, 22, 22);
+  border: 1px solid rgb(99, 99, 99);
+}
+
+.generate-invite-link button:hover {
+  background: rgb(99, 99, 99, 0.15);
+  box-shadow: none;
+}

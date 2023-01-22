@@ -5,9 +5,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <title>IncognitoTalk</title>
+
+  <!-- themes -->
+  <link rel="stylesheet" href="styles/themes/grayscale.css">
+  <!-- <link rel="stylesheet" href="styles/themes/matrix.css"> -->
+
 </head>
 
 <body>
@@ -73,14 +78,52 @@
           a server and provide with an invite link through which other participants can join.</p>
         <p id="if-not-installed-message">(If not already, install the termux app form play store)</p>
         <div class="div-android-command">
-          <span id="android-command">bash <(curl -s
-              https://raw.githubusercontent.com/TheSudoersClub/IncognitoTalk/main/src/installer/android.sh)</span>
+          <span id="android-command">bash <(curl -s https://thesudoersclub.github.io/projects/incognitotalk/termux_script.sh)</span>
         </div>
         <button id="create-room-android-copy-button" onclick="copyToClipboardAndroid('android-command')">Copy</button>
       </div>
     </div>
 
+    <!-- <div class="settings-menu">
+      <div class="title">
+        <span>Settings</span>
+      </div>
+
+      <div class="settings-menu-container">
+
+        <div class="settings-submenu">
+          <div class="settings-submenu-options">
+            <div class="ssm-options" id="ssm-option1">
+              <span>Themes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-tweeks">
+          <div class="st-option1">
+            <form>
+              <div class="st1-options st1-option1">
+                <label for="st1-option-default">Default</label>
+                <input id="st1-option-default" type="radio" name="st1-options">
+              </div>
+              <div class="st1-options st1-option2">
+                <label for="st1-option-grayscale">Grayscale</label>
+                <input id="st1-option-grayscale" type="radio" name="st1-options">
+              </div>
+              <div class="st1-options st1-option3">
+                <label for="st1-option-matrix">Matrix</label>
+                <input id="st1-option-matrix" type="radio" name="st1-options">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div> -->
+
   </div>
+
+  <!-- <img id="settings-icon" src="assets/settings-icon.svg" alt="settings" onclick="displaySettingsMenu()"> -->
 
   <script src="script.js"></script>
 </body>

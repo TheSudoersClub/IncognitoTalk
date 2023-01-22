@@ -99,3 +99,10 @@ function joinRoom() {
 async function sleep(s) {
   return new Promise((resolve) => setTimeout(resolve, s * 1000));
 }
+
+// settings menu
+function displaySettingsMenu() {
+  document.querySelector(".choice").style.display = "none";
+  document.querySelector(".settings-menu").style.display = "block";
+  document.querySelector("#settings-icon").style.display = "none";
+}
