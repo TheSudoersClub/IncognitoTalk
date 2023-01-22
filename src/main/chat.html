@@ -31,25 +31,11 @@
 
 <body>
 
-  <!-- <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      let container = document.querySelector('.container').style.display = 'none';
-    });
-  </script> -->
-
   <div id="root">
     <!-- nick name prompt on load -->
     <div class="nick-name-prompt">
       <label for="input-nick-name-prompt">Enter a Nick Name</label>
       <input autofocus type="text" id="input-nick-name-prompt">
-      <script>
-        document.querySelector("#input-nick-name-prompt").addEventListener('keypress', function (e) {
-          if (e.key === 'Enter') {
-            document.querySelector(".nick-name-prompt").style.display = "none";
-            document.querySelector('.container').style.display = 'flex';
-          }
-        });
-      </script>
     </div>
 
     <!-- main app body -->

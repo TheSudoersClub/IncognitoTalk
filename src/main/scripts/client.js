@@ -7,8 +7,15 @@ document
   .querySelector("#input-nick-name-prompt")
   .addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
+      // get the username
       username = document.getElementById("input-nick-name-prompt").value;
-      initializeWebSocket();
+
+      // if username is not empty
+      if (username != "") {
+        document.querySelector(".nick-name-prompt").style.display = "none";
+        document.querySelector('.container').style.display = 'flex';
+        initializeWebSocket();
+      }
     }
   });
 
