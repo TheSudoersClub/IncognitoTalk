@@ -1,7 +1,7 @@
 // declarations
 const socketLink = 'localhost:7772';
 
-var username;
+let username;
 
 document
   .querySelector("#input-nick-name-prompt")
@@ -12,77 +12,102 @@ document
     }
   });
 
-var socket;
 
-window.onbeforeunload = function () {
-  if (socket && socket.readyState === WebSocket.OPEN) {
-    socket.send(`USER_LEFT: ${username}`);
-  }
-};
+let socket;
 
-function initializeWebSocket() {
+const initializeWebSocket = () => {
+
   socket = new WebSocket(`ws://${socketLink}`);
 
+  const chatBox = document.getElementById("chats");
+
+  // before unloading the window (when client is disconnected from socket)
+  window.onbeforeunload = function () {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(`USER_LEFT: ${username}`); // send the "USER_LEFT" message to the server
+    }
+  };
+
+  // when client connected to socket 
   socket.onopen = () => {
     socket.send(`USER_JOINED: ${username}`); // send the "USER_JOINED" message to the server
   };
+
+  // when socket is closed 
   socket.onclose = () => {
-    const messages = document.getElementById("chats");
-    messages.innerHTML += `<br><div class="server-terminated">⚠️ Server Terminated</div>`; // send the "USER_JOINED" message to the server
+
+    // display server terminated message when socket-server is closed
+    chatBox.innerHTML += `<br><div class="server-terminated">⚠️ Server Terminated</div>`;
+
     scrollToBottom();
   };
 
-  socket.onmessage = (event) => {
-    const reader = new FileReader();
+  // handle chatBox on socket message event 
+  socket.onmessage = () => {
+    handleMessage(chatBox);
+  }
 
-    reader.addEventListener("loadend", (e) => {
-      // scroll to bottom when new message received
-      scrollToBottom();
 
-      const data = e.srcElement.result;
-
-      if (data.startsWith("USER_JOINED: ")) {
-        // this is a "user joined" message
-        const username = data.slice("USER_JOINED: ".length);
-        const messages = document.getElementById("chats");
-
-        messages.innerHTML += `<br><div class="user-joined">${username} joined the chat</div>`;
-        playNotificationSfx();
-      } //
-      else if (data.startsWith("USER_LEFT: ")) {
-        // this is a "user joined" message
-        const username = data.slice("USER_LEFT: ".length);
-        const messages = document.getElementById("chats");
-
-        messages.innerHTML += `<br><div class="user-left">${username} left the chat</div>`;
-      } //
-      else {
-        // this is a regular message
-        const messages = document.getElementById("chats");
-
-        messages.innerHTML += `<div class="send-message">${data}</div>`;
-        playNotificationSfx();
-      }
-    });
-
-    reader.readAsText(event.data);
-  };
 }
 
+const handleMessage = (chatBox) => {
 
-function sendMessage() {
+  const reader = new FileReader();
+
+  reader.addEventListener("loadend", (e) => {
+
+    scrollToBottom(); // scroll to bottom when new message is received
+
+    const data = e.srcElement.result; // received data from socket server 
+
+    // "user joined" message
+    if (data.startsWith("USER_JOINED: ")) {
+      const username = data.slice("USER_JOINED: ".length); // get the username of user
+
+      // update message
+      chatBox.innerHTML += `<br><div class="user-joined">${username} joined the chat</div>`;
+
+      playNotificationSfx();
+    }
+
+    // "user joined" message
+    else if (data.startsWith("USER_LEFT: ")) {
+      const username = data.slice("USER_LEFT: ".length); // get the username of user
+
+      // update message
+      chatBox.innerHTML += `<br><div class="user-left">${username} left the chat</div>`;
+    }
+
+    // regular message
+    else {
+      // update message
+      chatBox.innerHTML += `<div class="send-message">${data}</div>`;
+
+      playNotificationSfx();
+    }
+  });
+
+  reader.readAsText(event.data);
+};
+
+const sendMessage = () => {
+  // get the message from user 
   const message = document.getElementById("input-send-message").value;
+
+  // sent message to socket server 
   socket.send(`<span class="username">${username} : &nbsp;</span> ${message}`);
+
+  // clear the input when message is send 
   document.getElementById("input-send-message").value = "";
 }
 
-function scrollToBottom() {
+const scrollToBottom = () => {
   document
     .getElementById("chats")
     .scrollTo(0, document.getElementById("chats").scrollHeight);
 }
 
-function playNotificationSfx() {
+const playNotificationSfx = () => {
   var notificationSfx = new Audio("../assets/sfx/notification-sfx-discord.mp3");
   if (document.hidden) {
     notificationSfx.play();
