@@ -10,8 +10,11 @@ document
       // get the username
       username = document.getElementById("input-nick-name-prompt").value;
 
+      // remove white spaces  
+      username = username.trim();
+
       // if username is not empty
-      if (username != "") {
+      if (username != "" && username.length > 0) {
         document.querySelector(".nick-name-prompt").style.display = "none";
         document.querySelector('.container').style.display = 'flex';
         initializeWebSocket();
