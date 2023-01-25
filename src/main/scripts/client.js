@@ -1,6 +1,9 @@
 // declarations
 const socketLink = 'localhost:7772';
 
+// the decryption key of server 
+let key = "It-decryptionKey123"
+
 let username;
 
 document
@@ -34,13 +37,13 @@ const initializeWebSocket = () => {
   // before unloading the window (when client is disconnected from socket)
   window.onbeforeunload = function () {
     if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(`USER_LEFT: ${username}`); // send the "USER_LEFT" message to the server
+      socket.send(encrypt(`USER_LEFT: ${username}`, key)); // send the "USER_LEFT" message to the server
     }
   };
 
   // when client connected to socket 
   socket.onopen = () => {
-    socket.send(`USER_JOINED: ${username}`); // send the "USER_JOINED" message to the server
+    socket.send(encrypt(`USER_JOINED: ${username}`, key)); // send the "USER_JOINED" message to the server
   };
 
   // when socket is closed 
@@ -57,7 +60,6 @@ const initializeWebSocket = () => {
     handleMessage(chatBox);
   }
 
-
 }
 
 const handleMessage = (chatBox) => {
@@ -68,7 +70,10 @@ const handleMessage = (chatBox) => {
 
     scrollToBottom(); // scroll to bottom when new message is received
 
-    const data = reader.result;
+    let data = reader.result;
+
+    // decrypt the data received from server with decryption key
+    data = decrypt(data, key);
 
     // "user joined" message
     if (data.startsWith("USER_JOINED: ")) {
@@ -105,14 +110,21 @@ const sendMessage = () => {
   const message = document.getElementById("input-send-message").value;
 
   if (message != "") {
-    // sent message to socket server 
-    socket.send(`<span class="username">${username} : &nbsp;</span> ${message}`);
+    // sent encrypted message to socket server 
+    socket.send(encrypt(`<span class="username">${username} : &nbsp;</span> ${message}`, key));
 
     // clear the input when message is send 
     document.getElementById("input-send-message").value = "";
   }
 }
 
+const encrypt = (string, key) => {
+  return CryptoJS.AES.encrypt(string, key).toString();
+}
+
+const decrypt = (string, key) => {
+  return CryptoJS.AES.decrypt(string, key).toString(CryptoJS.enc.Utf8);
+}
 
 
 const scrollToBottom = () => {
