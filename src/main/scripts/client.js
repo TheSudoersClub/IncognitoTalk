@@ -64,11 +64,11 @@ const handleMessage = (chatBox) => {
 
   const reader = new FileReader();
 
-  reader.addEventListener("loadend", (e) => {
+  reader.addEventListener("loadend", (event) => {
 
     scrollToBottom(); // scroll to bottom when new message is received
 
-    const data = e.srcElement.result; // received data from socket server 
+    const data = reader.result;
 
     // "user joined" message
     if (data.startsWith("USER_JOINED: ")) {
@@ -112,6 +112,8 @@ const sendMessage = () => {
     document.getElementById("input-send-message").value = "";
   }
 }
+
+
 
 const scrollToBottom = () => {
   document
