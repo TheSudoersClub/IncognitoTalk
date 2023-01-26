@@ -2,7 +2,7 @@
 const socketLink = 'localhost:7772';
 
 // the decryption key of server 
-let key = "It-decryptionKey123"
+const key = "It-decryptionKey123";
 
 let username;
 
