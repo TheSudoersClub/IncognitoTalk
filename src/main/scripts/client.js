@@ -1,4 +1,4 @@
-// declarations
+// socket server link
 const socketLink = 'localhost:7772';
 
 // the decryption key of the server 
@@ -7,8 +7,9 @@ const key = prompt('Enter the key: ');
 // hash the entered key
 const hash = CryptoJS.SHA256(key).toString();
 
-// check decryption key
+// validate decryption key
 let validKey;
+
 fetch(`${window.location.href}compare-hash`, {
     method: 'POST',
     headers: {
@@ -28,7 +29,7 @@ fetch(`${window.location.href}compare-hash`, {
   })
   .catch(error => console.error(error));
 
-
+// Read and handle the nickname 
 let username;
 
 document
@@ -45,7 +46,11 @@ document
       if (username != "" && username.length > 0) {
         document.querySelector(".nick-name-prompt").style.display = "none";
         document.querySelector('.container').style.display = 'flex';
-        initializeWebSocket();
+
+        if (validKey != undefined) {
+          initializeWebSocket();
+        }
+
       }
     }
   });
