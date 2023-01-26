@@ -4,37 +4,15 @@ const socketLink = 'localhost:7772';
 // the decryption key of the server 
 const key = prompt('Enter the key: ');
 
-// hash the entered key
-const hash = CryptoJS.SHA256(key).toString();
-
-// validate decryption key
+// Read and handle the decryption key 
 let validKey;
-
-fetch(`${window.location.href}compare-hash`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      hash: hash
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      validKey = true;
-    } else {
-      validKey = false;
-    }
-  })
-  .catch(error => console.error(error));
 
 // Read and handle the nickname 
 let username;
 
 document
   .querySelector("#input-nick-name-prompt")
-  .addEventListener("keypress", function (e) {
+  .addEventListener("keypress", async function (e) {
     if (e.key === "Enter") {
       // get the username
       username = document.getElementById("input-nick-name-prompt").value;
@@ -47,6 +25,9 @@ document
         document.querySelector(".nick-name-prompt").style.display = "none";
         document.querySelector('.container').style.display = 'flex';
 
+        // validate decryption key
+        validKey = await validateKey(key);
+
         if (validKey != undefined) {
           initializeWebSocket();
         }
@@ -58,7 +39,7 @@ document
 
 let socket;
 
-const initializeWebSocket = () => {
+function initializeWebSocket() {
   socket = new WebSocket(`ws://${socketLink}`);
 
   const chatBox = document.getElementById("chats");
@@ -101,7 +82,7 @@ const initializeWebSocket = () => {
 
 }
 
-const handleMessage = (chatBox) => {
+function handleMessage(chatBox) {
 
   const reader = new FileReader();
 
@@ -144,7 +125,7 @@ const handleMessage = (chatBox) => {
   reader.readAsText(event.data);
 };
 
-const sendMessage = () => {
+function sendMessage() {
   // if decryption key is valid 
   if (validKey) {
     // get the message from user 
@@ -160,22 +141,47 @@ const sendMessage = () => {
   }
 }
 
-const encrypt = (string, key) => {
+async function validateKey(key) {
+  // hash the entered key
+  const hash = CryptoJS.SHA256(key).toString();
+
+  try {
+    const response = await fetch(`${window.location.href}compare-hash`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        hash: hash
+      })
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function encrypt(string, key) {
   return CryptoJS.AES.encrypt(string, key).toString();
 }
 
-const decrypt = (string, key) => {
+function decrypt(string, key) {
   return CryptoJS.AES.decrypt(string, key).toString(CryptoJS.enc.Utf8);
 }
 
-
-const scrollToBottom = () => {
+function scrollToBottom() {
   document
     .getElementById("chats")
     .scrollTo(0, document.getElementById("chats").scrollHeight);
 }
 
-const playNotificationSfx = () => {
+function playNotificationSfx() {
   var notificationSfx = new Audio("../assets/sfx/notification-sfx-discord.mp3");
   if (document.hidden) {
     notificationSfx.play();
