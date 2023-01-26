@@ -20,6 +20,4 @@ setTimeout(() => {
     fs.writeFile('key.txt', (key), (err) => {
         if (err) throw err;
     });
-
-    console.log(key);
 }, 10000);

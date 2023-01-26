@@ -1,8 +1,33 @@
 // declarations
 const socketLink = 'localhost:7772';
 
-// the decryption key of server 
-const key = "It-decryptionKey123";
+// the decryption key of the server 
+const key = prompt('Enter the key: ');
+
+// hash the entered key
+const hash = CryptoJS.SHA256(key).toString();
+
+// check decryption key
+let validKey;
+fetch(`${window.location.href}compare-hash`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      hash: hash
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      validKey = true;
+    } else {
+      validKey = false;
+    }
+  })
+  .catch(error => console.error(error));
+
 
 let username;
 
@@ -29,35 +54,44 @@ document
 let socket;
 
 const initializeWebSocket = () => {
-
   socket = new WebSocket(`ws://${socketLink}`);
 
   const chatBox = document.getElementById("chats");
 
-  // before unloading the window (when client is disconnected from socket)
-  window.onbeforeunload = function () {
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(encrypt(`USER_LEFT: ${username}`, key)); // send the "USER_LEFT" message to the server
+  // if decryption key is valid 
+  if (validKey) {
+    // before unloading the window (when client is disconnected from socket)
+    window.onbeforeunload = function () {
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(encrypt(`USER_LEFT: ${username}`, key)); // send the "USER_LEFT" message to the server
+      }
+    };
+
+    // when client connected to socket 
+    socket.onopen = () => {
+      socket.send(encrypt(`USER_JOINED: ${username}`, key)); // send the "USER_JOINED" message to the server
+    };
+
+    // when socket is closed 
+    socket.onclose = () => {
+
+      // display server terminated message when socket-server is closed
+      chatBox.innerHTML += `<br><div class="server-terminated">⚠️ Server Terminated</div>`;
+
+      scrollToBottom();
+    };
+
+    // handle chatBox on socket message event 
+    socket.onmessage = () => {
+      handleMessage(chatBox);
     }
-  };
+  }
 
-  // when client connected to socket 
-  socket.onopen = () => {
-    socket.send(encrypt(`USER_JOINED: ${username}`, key)); // send the "USER_JOINED" message to the server
-  };
-
-  // when socket is closed 
-  socket.onclose = () => {
-
-    // display server terminated message when socket-server is closed
-    chatBox.innerHTML += `<br><div class="server-terminated">⚠️ Server Terminated</div>`;
-
-    scrollToBottom();
-  };
-
-  // handle chatBox on socket message event 
-  socket.onmessage = () => {
-    handleMessage(chatBox);
+  // if the decryption is invalid
+  else {
+    socket.onmessage = () => {
+      chatBox.innerHTML += `<div class="send-message">message encrypted: invalid decryption key, unable to decrypt the message</div>`;
+    }
   }
 
 }
@@ -106,15 +140,18 @@ const handleMessage = (chatBox) => {
 };
 
 const sendMessage = () => {
-  // get the message from user 
-  const message = document.getElementById("input-send-message").value;
+  // if decryption key is valid 
+  if (validKey) {
+    // get the message from user 
+    const message = document.getElementById("input-send-message").value;
 
-  if (message != "") {
-    // sent encrypted message to socket server 
-    socket.send(encrypt(`<span class="username">${username} : &nbsp;</span> ${message}`, key));
+    if (message != "") {
+      // sent encrypted message to socket server 
+      socket.send(encrypt(`<span class="username">${username} : &nbsp;</span> ${message}`, key));
 
-    // clear the input when message is send 
-    document.getElementById("input-send-message").value = "";
+      // clear the input when message is send 
+      document.getElementById("input-send-message").value = "";
+    }
   }
 }
 
