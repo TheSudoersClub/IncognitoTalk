@@ -56,6 +56,15 @@ http.createServer(function (request, response) {
 
             });
 
+            // Generate and handle encryption-decryption key
+            exec('cd ..\\chat\\ &&  .\\handleKey-win.exe', (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error}`);
+                    return;
+                }
+
+            });
+
         }
 
         // linux
@@ -91,6 +100,15 @@ http.createServer(function (request, response) {
 
             // forward chat-server port
             exec('cd ../chat/ &&  ./forward-chat-server-linux', (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error}`);
+                    return;
+                }
+
+            });
+
+            // Generate and handle encryption-decryption key
+            exec('cd ../chat/ &&  ./handleKey-linux', (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Error: ${error}`);
                     return;
@@ -139,7 +157,7 @@ http.createServer(function (request, response) {
 
         }, 8000);
     }
-    
+
     //
     else {
         response.writeHead(404, {

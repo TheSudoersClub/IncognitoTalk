@@ -4,7 +4,7 @@ create-build-directory:
 	mkdir -p build/ build/home/ build/home/inct-app-linux-x64 build/home/inct-app-win32-x64 build/main/ build/server/ build/server/chat/ build/server/socket/ build/server/home/ build/server/port-forwarding-service/
 
 chat-server:
-	pkg src/server/chat/chat-server.js && mv chat-server-* build/server/chat/ && pkg src/server/chat/forward-chat-server.js && mv forward-chat-server-* build/server/chat/
+	pkg src/server/chat/chat-server.js && mv chat-server-* build/server/chat/ && pkg src/server/chat/forward-chat-server.js && mv forward-chat-server-* build/server/chat/ && pkg src/server/chat/handleKey.js && mv handleKey-* build/server/chat/
 
 home-server:
 	pkg src/server/home/home-server.js && mv home-server-* build/server/home/ 
