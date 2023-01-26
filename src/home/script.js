@@ -33,7 +33,6 @@ document
         .then((response) => response.text())
         .then((data) => {
           key = data;
-          alert(key);
         });
 
 
@@ -68,6 +67,10 @@ async function displayInviteLink() {
   await sleep(10);
   document.querySelector(".processing_animation").style.display = "none";
   document.getElementById("invite-link").innerHTML = "http://" + inviteLink;
+
+  // decryption key
+  document.getElementById("decryption-key").innerHTML = key;
+
   document.querySelector(".generate-invite-link").style.display = "block";
 }
 

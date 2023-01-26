@@ -10,7 +10,7 @@
   <title>IncognitoTalk</title>
 
   <!-- themes -->
-<!--   <link rel="stylesheet" href="styles/themes/grayscale.css"> -->
+  <!--   <link rel="stylesheet" href="styles/themes/grayscale.css"> -->
   <!-- <link rel="stylesheet" href="styles/themes/matrix.css"> -->
 
 </head>
@@ -53,6 +53,7 @@
         <span>Creating room...</span>
       </div>
       <div class="generate-invite-link">
+
         <div class="create-room-invite-link">
           <div class="div-invite-link">
             <span id="invite-link"></span>
@@ -62,6 +63,19 @@
             <img id="copy-icon" onclick="copyToClipboard('invite-link')" src="assets/copy-icon.svg" alt="copy">
           </div>
         </div>
+
+        <!-- decryption key -->
+        <br>
+        <div class="create-room-invite-link">
+          <div class="div-invite-link">
+            <span id="decryption-key"></span>
+          </div>
+          <div class="copy-link">
+            <div class="copied-message"><span>Copied</span></div>
+            <img id="copy-icon" onclick="copyToClipboard('decryption-key')" src="assets/copy-icon.svg" alt="copy">
+          </div>
+        </div>
+
         <div class="create-room-message">
           The server has been successfully established. Above is an invite link for your room through which other
           participants can join.
@@ -78,7 +92,8 @@
           a server and provide with an invite link through which other participants can join.</p>
         <p id="if-not-installed-message">(If not already, install the termux app form play store)</p>
         <div class="div-android-command">
-          <span id="android-command">bash <(curl -s https://thesudoersclub.github.io/projects/incognitotalk/termux_script.sh)</span>
+          <span id="android-command">bash <(curl -s
+              https://thesudoersclub.github.io/projects/incognitotalk/termux_script.sh)</span>
         </div>
         <button id="create-room-android-copy-button" onclick="copyToClipboardAndroid('android-command')">Copy</button>
       </div>
