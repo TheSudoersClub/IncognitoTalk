@@ -1,5 +1,6 @@
 // invite link
 let inviteLink;
+let key;
 
 //onclick create room
 document
@@ -19,13 +20,23 @@ document
         method: "POST",
       });
 
-      fetch("http://localhost:7771/execute-file")
+      // get invite link
+      fetch("http://localhost:7771/inviteLink")
         .then((response) => response.text())
         .then((link) => {
           inviteLink = link;
-          // console.log(`Invite link: http://${inviteLink}`);
-          // alert(inviteLink);
+          console.log(inviteLink);
         });
+
+      // get decryption key
+      fetch("http://localhost:7771/key")
+        .then((response) => response.text())
+        .then((data) => {
+          key = data;
+          alert(key);
+        });
+
+
       document.querySelector(".create-room-prompt").style.display = "block";
       document.querySelector(".processing_animation").style.display = "block";
       displayInviteLink();
@@ -60,7 +71,7 @@ async function displayInviteLink() {
   document.querySelector(".generate-invite-link").style.display = "block";
 }
 
-//copylink
+//copy link
 function copyToClipboard(id) {
   let value = document.getElementById(id).innerHTML;
   navigator.clipboard.writeText(value);

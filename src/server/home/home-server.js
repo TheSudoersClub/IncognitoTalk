@@ -25,7 +25,6 @@ http.createServer(function (request, response) {
                     console.error(`Error: ${error}`);
                     return;
                 }
-                console.log(`Output: ${stdout}`);
 
             });
 
@@ -35,7 +34,6 @@ http.createServer(function (request, response) {
                     console.error(`Error: ${error}`);
                     return;
                 }
-                console.log(`Output: ${stdout}`);
 
             });
 
@@ -46,7 +44,6 @@ http.createServer(function (request, response) {
                     console.error(`Error: ${error}`);
                     return;
                 }
-                console.log(`Output: ${stdout}`);
 
             });
 
@@ -56,21 +53,9 @@ http.createServer(function (request, response) {
                     console.error(`Error: ${error}`);
                     return;
                 }
-                console.log(`Output: ${stdout}`);
 
             });
 
-            // read invite link
-            setTimeout(() => {
-                fs.readFile('..\\chat\\link.txt', 'utf8', (err, data) => {
-                    if (err) throw err;
-
-                    response.writeHead(200, {
-                        'Content-Type': 'text/plain'
-                    });
-                    response.end(data);
-                });
-            }, 8000);
         }
 
         // linux
@@ -82,7 +67,6 @@ http.createServer(function (request, response) {
                     console.error(`Error: ${error}`);
                     return;
                 }
-                console.log(`Output: ${stdout}`);
 
             });
 
@@ -92,7 +76,6 @@ http.createServer(function (request, response) {
                     console.error(`Error: ${error}`);
                     return;
                 }
-                console.log(`Output: ${stdout}`);
 
             });
 
@@ -103,7 +86,6 @@ http.createServer(function (request, response) {
                     console.error(`Error: ${error}`);
                     return;
                 }
-                console.log(`Output: ${stdout}`);
 
             });
 
@@ -113,22 +95,9 @@ http.createServer(function (request, response) {
                     console.error(`Error: ${error}`);
                     return;
                 }
-                console.log(`Output: ${stdout}`);
 
             });
 
-            // read invite link
-            setTimeout(() => {
-                fs.readFile('../chat/link.txt', 'utf8', (err, data) => {
-                    if (err) throw err;
-
-                    response.writeHead(200, {
-                        'Content-Type': 'text/plain'
-                    });
-                    response.end(data);
-
-                });
-            }, 8000);
         }
 
         // OS X
@@ -136,8 +105,41 @@ http.createServer(function (request, response) {
             // todo 
         }
 
-
     }
+
+    // send Invite link 
+    else if (request.url === '/inviteLink') {
+        // read invite link and decryption key
+        setTimeout(() => {
+            fs.readFile('../chat/link.txt', 'utf8', (err, data) => {
+                if (err) throw err;
+
+                response.writeHead(200, {
+                    'Content-Type': 'text/plain'
+                });
+
+                response.end(data);
+            });
+
+        }, 8000);
+    }
+
+    // send decryption key 
+    else if (request.url === '/key') {
+        setTimeout(() => {
+            fs.readFile('../chat/key.txt', 'utf8', (err, data) => {
+                if (err) throw err;
+
+                response.writeHead(200, {
+                    'Content-Type': 'text/plain'
+                });
+
+                response.end(data);
+            });
+
+        }, 8000);
+    }
+    
     //
     else {
         response.writeHead(404, {
