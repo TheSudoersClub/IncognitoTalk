@@ -1,5 +1,5 @@
 // socket server link
-const socketLink = 'localhost:7772';
+const socketLink = 'bore.pub:43489';
 
 // clients joined in chat 
 let clients = [];
@@ -20,11 +20,11 @@ document
       // get the username
       username = document.getElementById("input-nick-name-prompt").value;
 
-      // remove white spaces
-      username = username.trim();
+      // check weather username is valid or not 
+      let usernameWords = username.split(" ");
 
-      // if username is not empty
-      if (username != "" && username.length > 0) {
+
+      if (usernameWords.length == 1 && username != '') {
         document.querySelector(".nick-name-prompt").style.display = "none";
 
         //get decryption key
@@ -47,6 +47,11 @@ document
             }
           });
       }
+      //
+      else {
+        console.log("username not allowed");
+      }
+
     }
   });
 
@@ -196,8 +201,6 @@ async function updateClients() {
   const data = await response.text()
   return data
 }
-
-
 
 function encrypt(string, key) {
   return CryptoJS.AES.encrypt(string, key).toString();
