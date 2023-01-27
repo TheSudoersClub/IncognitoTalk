@@ -144,8 +144,37 @@ function handleMessage(chatBox) {
 
     // regular message
     else {
-      // update message
-      chatBox.innerHTML += `<div class="send-message">${data}</div>`;
+
+      // get the normal to check weather the message is tagged or not
+      const pattern = /<span class="username">(.+?) : &nbsp;<\/span> (.+)/;
+
+      const [match, parsedUsername, parsedMessage] = data.match(pattern);
+
+
+      // tagged message
+      if (parsedMessage.startsWith("@")) {
+
+        const pattern = /@(\w+)/;
+        const match = await parsedMessage.match(pattern);
+        console.log(match[1]); // "hello"
+
+        if (match[1] === username) {
+          chatBox.innerHTML += `<div class="send-message tagged-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
+        }
+        // 
+        else {
+          chatBox.innerHTML += `<div class="send-message">${data}</div>`;
+        }
+
+      }
+
+      // normal message
+      else {
+
+        // update message
+        chatBox.innerHTML += `<div class="send-message">${data}</div>`;
+      }
+
       playNotificationSfx();
     }
 

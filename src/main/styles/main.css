@@ -63,7 +63,7 @@
   padding-left: 15px;
   padding-right: 15px;
   border: none;
-  background: rgb(22,22,22);
+  background: rgb(22, 22, 22);
   color: white;
   caret-color: aqua;
   border-top-left-radius: 5px;
@@ -112,6 +112,10 @@
 .send-message {
   padding: 0.2rem;
   margin-bottom: 0.8rem;
+}
+
+.tagged-message {
+  background-color: rgba(255, 187, 0, 0.025);
 }
 
 .server-terminated {
