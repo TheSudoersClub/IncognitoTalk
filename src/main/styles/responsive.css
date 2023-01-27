@@ -33,6 +33,18 @@
   .nick-name-prompt {
     width: 350px;
   }
+
+  .decryption-key-prompt {
+    width: 300px;
+  }
+
+  .decryption-key-prompt label {
+    transform: translateX(-3rem);
+  }
+
+  .decryption-key-prompt input {
+    width: 12rem;
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -68,7 +80,21 @@
   .nick-name-prompt {
     width: 300px;
   }
+
+  .decryption-key-prompt {
+    width: 250px;
+  }
+
   .nick-name-prompt input {
+    padding: 10px 12px;
+    width: 10rem;
+  }
+
+  .decryption-key-prompt label {
+    transform: translateX(-2rem);
+  }
+
+  .decryption-key-prompt input {
     padding: 10px 12px;
     width: 10rem;
   }

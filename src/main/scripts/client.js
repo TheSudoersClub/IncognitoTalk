@@ -1,13 +1,13 @@
 // socket server link
-const socketLink = 'localhost:7772';
+const socketLink = "localhost:7772";
 
-// the decryption key of the server 
-const key = prompt('Enter the key: ');
+// the decryption key of the server
+let key;
 
-// Read and handle the decryption key 
+// Read and handle the decryption key
 let validKey;
 
-// Read and handle the nickname 
+// Read and handle the nickname
 let username;
 
 document
@@ -17,13 +17,27 @@ document
       // get the username
       username = document.getElementById("input-nick-name-prompt").value;
 
-      // remove white spaces  
+      // remove white spaces
       username = username.trim();
 
       // if username is not empty
       if (username != "" && username.length > 0) {
         document.querySelector(".nick-name-prompt").style.display = "none";
-        document.querySelector('.container').style.display = 'flex';
+
+        //get decryption key
+        document.querySelector(".decryption-key-prompt").style.display = "flex";
+        document
+          .querySelector("#input-decryption-key-prompt")
+          .addEventListener("keypress", async function (e) {
+            if (e.key === "Enter") {
+              key = document.querySelector(
+                "#input-decryption-key-prompt"
+              ).value;
+              document.querySelector(".decryption-key-prompt").style.display =
+                "none";
+              document.querySelector(".container").style.display = "flex";
+            }
+          });
 
         // validate decryption key
         validKey = await validateKey(key);
@@ -31,11 +45,9 @@ document
         if (validKey != undefined) {
           initializeWebSocket();
         }
-
       }
     }
   });
-
 
 let socket;
 
@@ -44,7 +56,7 @@ function initializeWebSocket() {
 
   const chatBox = document.getElementById("chats");
 
-  // if decryption key is valid 
+  // if decryption key is valid
   if (validKey) {
     // before unloading the window (when client is disconnected from socket)
     window.onbeforeunload = function () {
@@ -53,41 +65,37 @@ function initializeWebSocket() {
       }
     };
 
-    // when client connected to socket 
+    // when client connected to socket
     socket.onopen = () => {
       socket.send(encrypt(`USER_JOINED: ${username}`, key)); // send the "USER_JOINED" message to the server
     };
 
-    // when socket is closed 
+    // when socket is closed
     socket.onclose = () => {
-
       // display server terminated message when socket-server is closed
       chatBox.innerHTML += `<br><div class="server-terminated">⚠️ Server Terminated</div>`;
 
       scrollToBottom();
     };
 
-    // handle chatBox on socket message event 
+    // handle chatBox on socket message event
     socket.onmessage = () => {
       handleMessage(chatBox);
-    }
+    };
   }
 
   // if the decryption is invalid
   else {
     socket.onmessage = () => {
       chatBox.innerHTML += `<div class="send-message">message encrypted: invalid decryption key, unable to decrypt the message</div>`;
-    }
+    };
   }
-
 }
 
 function handleMessage(chatBox) {
-
   const reader = new FileReader();
 
   reader.addEventListener("loadend", (event) => {
-
     scrollToBottom(); // scroll to bottom when new message is received
 
     let data = reader.result;
@@ -123,19 +131,24 @@ function handleMessage(chatBox) {
   });
 
   reader.readAsText(event.data);
-};
+}
 
 function sendMessage() {
-  // if decryption key is valid 
+  // if decryption key is valid
   if (validKey) {
-    // get the message from user 
+    // get the message from user
     const message = document.getElementById("input-send-message").value;
 
     if (message != "") {
-      // sent encrypted message to socket server 
-      socket.send(encrypt(`<span class="username">${username} : &nbsp;</span> ${message}`, key));
+      // sent encrypted message to socket server
+      socket.send(
+        encrypt(
+          `<span class="username">${username} : &nbsp;</span> ${message}`,
+          key
+        )
+      );
 
-      // clear the input when message is send 
+      // clear the input when message is send
       document.getElementById("input-send-message").value = "";
     }
   }
@@ -147,13 +160,13 @@ async function validateKey(key) {
 
   try {
     const response = await fetch(`${window.location.href}compare-hash`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        hash: hash
-      })
+        hash: hash,
+      }),
     });
 
     const data = await response.json();
