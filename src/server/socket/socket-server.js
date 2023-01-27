@@ -4,6 +4,9 @@ const fs = require('fs');
 const CryptoJS = require('crypto-js');
 
 const express = require('express');
+const {
+  json
+} = require("body-parser");
 const app = express();
 const server = require('http').createServer(app);
 
@@ -57,7 +60,7 @@ wss.on("connection", (ws) => {
 
 // end point for nicknames 
 app.get('/clients-joined', (req, res) => {
-  res.send(nicknames);
+  res.send(JSON.stringify(nicknames));
 });
 
 // update nicknames array when client is left and joined 
@@ -98,6 +101,8 @@ async function updateNicknames(message) {
 
   // remove all duplicate nicknames 
   nicknames = [...new Set(nicknames)];
+
+  console.log(typeof (nicknames))
 
 }
 

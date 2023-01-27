@@ -1,5 +1,5 @@
 // socket server link
-const socketLink = 'bore.pub:43489';
+const socketLink = 'bore.pub:43825';
 
 // clients joined in chat 
 let clients = [];
@@ -27,6 +27,10 @@ document
 
         // get the previously joined clients 
         clients = await updateClients();
+
+        // update tags div
+        renderClientsList();
+
 
         if (clients.includes(username)) {
           console.log(username, "is already taken");
@@ -64,6 +68,16 @@ document
     }
   });
 
+//tag-container
+let tagContainer = document.querySelector('.tags');
+
+document.querySelector('#input-send-message').addEventListener('keydown', function (e) {
+  if (clients.length != 0 && e.key === '@') {
+    tagContainer.style.display = "flex"
+  } else if (e.key === ' ' || e.key === "Enter") {
+    tagContainer.style.display = "none"
+  }
+})
 let socket;
 
 function initializeWebSocket() {
@@ -125,6 +139,9 @@ function handleMessage(chatBox) {
       // update list of joined clients (clients) 
       clients = await updateClients();
 
+      // update tags div
+      renderClientsList();
+
       // update message
       chatBox.innerHTML += `<br><div class="user-joined">${username} joined the chat</div>`;
 
@@ -137,6 +154,9 @@ function handleMessage(chatBox) {
 
       // update list of joined clients (clients) 
       clients = await updateClients();
+
+      // update tags div
+      renderClientsList();
 
       // update message
       chatBox.innerHTML += `<br><div class="user-left">${username} left the chat</div>`;
@@ -156,12 +176,14 @@ function handleMessage(chatBox) {
 
         const pattern = /@(\w+)/;
         const match = await parsedMessage.match(pattern);
-        console.log(match[1]); // "hello"
+        console.log(match[1]);
 
+        // if message is tagged to us
         if (match[1] === username) {
           chatBox.innerHTML += `<div class="send-message tagged-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
         }
-        // 
+
+        // if message is tagged to another client
         else {
           chatBox.innerHTML += `<div class="send-message">${data}</div>`;
         }
@@ -236,7 +258,7 @@ async function validateKey(key) {
 async function updateClients() {
   // get the usernames of joined clients 
   const response = await fetch(`http://${socketLink}/clients-joined`)
-  const data = await response.text()
+  const data = await response.json()
   return data
 }
 
@@ -259,4 +281,38 @@ function playNotificationSfx() {
   if (document.hidden) {
     notificationSfx.play();
   }
+}
+
+function renderClientsList() {
+  tagContainer.innerHTML = "";
+  let tagElement;
+
+  clients.forEach((element) => {
+    tagElement = document.createElement("span");
+    tagElement.innerText = element;
+
+    tagContainer.appendChild(tagElement);
+
+    console.log('client list updated');
+  });
+}
+
+function sortClientList(e) {
+  let string = '@';
+  document.querySelector('#input-send-message').addEventListener('keydown', function (e) {
+    string = string + e.key;
+    string = string.replace("@", "");
+    renderClientsListSorted(string);
+  })
+}
+
+function renderClientsListSorted(e) {
+  tagContainer.innerHTML = "";
+  let tagElement = document.createElement("span");
+  tagElement.innerText = searchArray(e);
+  tagContainer.appendChild(tagElement);
+}
+
+function searchArray(searchTerm) {
+  return clients.filter(item => item.startsWith(searchTerm));
 }

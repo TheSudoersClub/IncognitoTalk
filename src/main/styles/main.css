@@ -123,3 +123,30 @@
   font-weight: bold;
   text-align: center;
 }
+
+
+.tags {
+  position: absolute;
+  background: rgb(22, 22, 22);
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  overflow-x: auto;
+  overflow-wrap: break-word;
+
+  padding: 1rem 2rem;
+  width: 10rem;
+  height: auto;
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  bottom: 3.5rem;
+  left: 0%;
+
+  display: none;
+  animation-name: OnLoad;
+  animation-duration: 1s;
+}
