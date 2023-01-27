@@ -1,5 +1,8 @@
 // socket server link
-const socketLink = "localhost:7772";
+const socketLink = 'localhost:7772';
+
+// clients joined in chat 
+let clients = [];
 
 // the decryption key of the server
 let key;
@@ -30,21 +33,19 @@ document
           .querySelector("#input-decryption-key-prompt")
           .addEventListener("keypress", async function (e) {
             if (e.key === "Enter") {
-              key = document.querySelector(
-                "#input-decryption-key-prompt"
-              ).value;
-              document.querySelector(".decryption-key-prompt").style.display =
-                "none";
+              key = await document.querySelector("#input-decryption-key-prompt").value;
+
+              document.querySelector(".decryption-key-prompt").style.display = "none";
               document.querySelector(".container").style.display = "flex";
+
+              // validate decryption key
+              validKey = await validateKey(key);
+
+              if (validKey != undefined) {
+                initializeWebSocket();
+              }
             }
           });
-
-        // validate decryption key
-        validKey = await validateKey(key);
-
-        if (validKey != undefined) {
-          initializeWebSocket();
-        }
       }
     }
   });
@@ -95,7 +96,7 @@ function initializeWebSocket() {
 function handleMessage(chatBox) {
   const reader = new FileReader();
 
-  reader.addEventListener("loadend", (event) => {
+  reader.addEventListener("loadend", async (event) => {
     scrollToBottom(); // scroll to bottom when new message is received
 
     let data = reader.result;
@@ -107,6 +108,9 @@ function handleMessage(chatBox) {
     if (data.startsWith("USER_JOINED: ")) {
       const username = data.slice("USER_JOINED: ".length); // get the username of user
 
+      // update list of joined clients (clients) 
+      clients = await updateClients();
+
       // update message
       chatBox.innerHTML += `<br><div class="user-joined">${username} joined the chat</div>`;
 
@@ -117,6 +121,9 @@ function handleMessage(chatBox) {
     else if (data.startsWith("USER_LEFT: ")) {
       const username = data.slice("USER_LEFT: ".length); // get the username of user
 
+      // update list of joined clients (clients) 
+      clients = await updateClients();
+
       // update message
       chatBox.innerHTML += `<br><div class="user-left">${username} left the chat</div>`;
     }
@@ -125,9 +132,12 @@ function handleMessage(chatBox) {
     else {
       // update message
       chatBox.innerHTML += `<div class="send-message">${data}</div>`;
-
       playNotificationSfx();
     }
+
+    // handle clients 
+    console.log(clients)
+
   });
 
   reader.readAsText(event.data);
@@ -179,6 +189,15 @@ async function validateKey(key) {
     console.error(error);
   }
 }
+
+async function updateClients() {
+  // get the usernames of joined clients 
+  const response = await fetch(`http://${socketLink}/clients-joined`)
+  const data = await response.text()
+  return data
+}
+
+
 
 function encrypt(string, key) {
   return CryptoJS.AES.encrypt(string, key).toString();
