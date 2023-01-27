@@ -70,7 +70,7 @@ http.createServer(function (request, response) {
         });
         request.on('end', function () {
             // get the real hash
-            let serverHash = fs.readFileSync('key.txt', 'utf8').toString();
+            let serverHash = fs.readFileSync('encrypted-key.txt', 'utf8').toString();
 
             // get the client hash
             let clientHash = JSON.parse(body).hash;

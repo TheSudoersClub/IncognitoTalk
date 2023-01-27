@@ -17,7 +17,7 @@ setTimeout(() => {
     key = hash.digest('hex');
 
     // update the key with hashed key
-    fs.writeFile('key.txt', (key), (err) => {
+    fs.writeFile('encrypted-key.txt', (key), (err) => {
         if (err) throw err;
     });
 }, 10000);
