@@ -23,29 +23,38 @@ document
       // check weather username is valid or not 
       let usernameWords = username.split(" ");
 
-
       if (usernameWords.length == 1 && username != '') {
-        document.querySelector(".nick-name-prompt").style.display = "none";
 
-        //get decryption key
-        document.querySelector(".decryption-key-prompt").style.display = "flex";
-        document
-          .querySelector("#input-decryption-key-prompt")
-          .addEventListener("keypress", async function (e) {
-            if (e.key === "Enter") {
-              key = await document.querySelector("#input-decryption-key-prompt").value;
+        // get the previously joined clients 
+        clients = await updateClients();
 
-              document.querySelector(".decryption-key-prompt").style.display = "none";
-              document.querySelector(".container").style.display = "flex";
+        if (clients.includes(username)) {
+          console.log(username, "is already taken");
+        }
+        //
+        else {
+          document.querySelector(".nick-name-prompt").style.display = "none";
 
-              // validate decryption key
-              validKey = await validateKey(key);
+          //get decryption key
+          document.querySelector(".decryption-key-prompt").style.display = "flex";
+          document
+            .querySelector("#input-decryption-key-prompt")
+            .addEventListener("keypress", async function (e) {
+              if (e.key === "Enter") {
+                key = await document.querySelector("#input-decryption-key-prompt").value;
 
-              if (validKey != undefined) {
-                initializeWebSocket();
+                document.querySelector(".decryption-key-prompt").style.display = "none";
+                document.querySelector(".container").style.display = "flex";
+
+                // validate decryption key
+                validKey = await validateKey(key);
+
+                if (validKey != undefined) {
+                  initializeWebSocket();
+                }
               }
-            }
-          });
+            });
+        }
       }
       //
       else {
