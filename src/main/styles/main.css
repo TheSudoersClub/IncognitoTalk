@@ -6,6 +6,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  /* display: flex; */
 }
 
 .container #chats {
@@ -139,7 +141,7 @@ textarea::-webkit-scrollbar-thumb {
   text-align: center;
 }
 
-.tags {
+.tag-elements-wrapper {
   position: absolute;
   background: rgb(22, 22, 22);
 
@@ -163,4 +165,14 @@ textarea::-webkit-scrollbar-thumb {
   display: none;
   animation-name: OnLoad;
   animation-duration: 1s;
+}
+
+.tag-elements-wrapper ul li {
+  list-style: none;
+  color: rgb(112, 112, 112);
+}
+
+.tag-elements-wrapper ul li:first-child {
+  color: white;
+  font-weight: 700;
 }
