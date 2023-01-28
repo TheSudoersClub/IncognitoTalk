@@ -7,7 +7,7 @@
   align-items: center;
   flex-direction: column;
 
-  display: flex;
+  /* display: flex; */
 }
 
 .container #chats {
@@ -168,10 +168,10 @@ textarea::-webkit-scrollbar-thumb {
 
 .tag-elements-wrapper ul li {
   list-style: none;
-  /* color: rgb(185, 185, 185); */
+  color: rgb(112, 112, 112);
 }
 
 .tag-elements-wrapper ul li:first-child {
-  /* background: rgb(32, 32, 32); */
-  /* color: white; */
+  color: white;
+  font-weight: 700;
 }

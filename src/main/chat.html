@@ -34,16 +34,16 @@
 
   <div id="root">
     <!-- nick name prompt on load -->
-    <!-- <div class="nick-name-prompt">
+    <div class="nick-name-prompt">
       <label for="input-nick-name-prompt">Enter a Nick Name</label>
       <input autofocus type="text" id="input-nick-name-prompt">
-    </div> -->
+    </div>
 
     <!-- decryption Key -->
-    <!-- <div class="decryption-key-prompt">
+    <div class="decryption-key-prompt">
       <label for="input-decryption-key-prompt">Decryption Key</label>
       <input autofocus type="text" id="input-decryption-key-prompt">
-    </div> -->
+    </div>
 
     <!-- main app body -->
     <div class="container">
@@ -51,10 +51,20 @@
       <div id="chats" onmouseover="this.style.overflow='auto'" onmouseout="this.style.overflow='hidden'"></div>
 
       <div class="prompt">
-        <div class="tag-elements-wrapper"><ul id="tags"></ul></div>
+        <div class="tag-elements-wrapper">
+          <ul id="tags"></ul>
+        </div>
         <textarea rows="1" autofocus type="text" id="input-send-message" autocomplete="off"
           oninput="auto_grow(this)"></textarea>
         <script>
+          document.getElementById("input-send-message").addEventListener("keydown", function (event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+              event.preventDefault();
+              sendMessage();
+            } else if (event.key === "Enter" && event.shiftKey) {
+            }
+          });
+
           // function auto_grow(element) {
           //   element.style.height = (element.scrollHeight) + "px";
 
