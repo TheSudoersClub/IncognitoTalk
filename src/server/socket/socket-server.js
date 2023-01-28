@@ -4,9 +4,6 @@ const fs = require('fs');
 const CryptoJS = require('crypto-js');
 
 const express = require('express');
-const {
-  json
-} = require("body-parser");
 const app = express();
 const server = require('http').createServer(app);
 
@@ -28,6 +25,8 @@ app.use((req, res, next) => {
 const clients = []; // Create an array to store connected clients
 
 let nicknames = []; // array on nicknames of joined clients to server 
+
+let bots = ["calculate"] // array of server bots
 
 wss.on("connection", (ws) => {
   // When a new client connects
@@ -61,6 +60,11 @@ wss.on("connection", (ws) => {
 // end point for nicknames 
 app.get('/clients-joined', (req, res) => {
   res.send(JSON.stringify(nicknames));
+});
+
+// end point for bots 
+app.get('/bots', (req, res) => {
+  res.send(JSON.stringify(bots));
 });
 
 // update nicknames array when client is left and joined 

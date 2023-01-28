@@ -1,5 +1,8 @@
 // socket server link
-const socketLink = 'bore.pub:43825';
+const socketLink = 'bore.pub:42665';
+
+// server bots
+let bots = [];
 
 // clients joined in chat 
 let clients = [];
@@ -80,10 +83,13 @@ document.querySelector('#input-send-message').addEventListener('keydown', functi
 })
 let socket;
 
-function initializeWebSocket() {
+async function initializeWebSocket() {
   socket = new WebSocket(`ws://${socketLink}`);
 
   const chatBox = document.getElementById("chats");
+
+  // get server bots
+  bots = await getBots();
 
   // if decryption key is valid
   if (validKey) {
@@ -176,11 +182,28 @@ function handleMessage(chatBox) {
 
         const pattern = /@(\w+)/;
         const match = await parsedMessage.match(pattern);
-        console.log(match[1]);
 
         // if message is tagged to us
         if (match[1] === username) {
           chatBox.innerHTML += `<div class="send-message tagged-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
+        }
+
+        // tagged bots 
+        else if (bots.includes(match[1])) {
+
+          // calculator bot
+          if (match[1] == 'calculate') {
+            let expression = parsedMessage.replace(/^@\S+\s/, "");
+
+            fetch(`https://incognitotalk-bots.onrender.com/calculate?expression=${encodeURIComponent(expression)}`)
+              .then(response => response.text())
+              .then(data => {
+                chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
+                chatBox.innerHTML += `<div class="send-message"><span class="username">Calculator : &nbsp;</span>${data} </div>`;
+                scrollToBottom();
+              })
+              .catch(error => console.error(error));
+          }
         }
 
         // if message is tagged to another client
@@ -199,9 +222,6 @@ function handleMessage(chatBox) {
 
       playNotificationSfx();
     }
-
-    // handle clients 
-    console.log(clients)
 
   });
 
@@ -262,6 +282,13 @@ async function updateClients() {
   return data
 }
 
+async function getBots() {
+  // get the usernames of joined clients 
+  const response = await fetch(`http://${socketLink}/bots`)
+  const data = await response.json()
+  return data
+}
+
 function encrypt(string, key) {
   return CryptoJS.AES.encrypt(string, key).toString();
 }
@@ -286,8 +313,9 @@ function playNotificationSfx() {
 function renderClientsList() {
   tagContainer.innerHTML = "";
   let tagElement;
+  let allClients = [...clients, ...bots]
 
-  clients.forEach((element) => {
+  allClients.forEach((element) => {
     tagElement = document.createElement("span");
     tagElement.innerText = element;
 
