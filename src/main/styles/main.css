@@ -140,7 +140,7 @@ textarea::-webkit-scrollbar-thumb {
   text-align: center;
 }
 
-.tags {
+.tag-elements-wrapper {
   position: absolute;
   background: rgb(22, 22, 22);
 
@@ -164,4 +164,14 @@ textarea::-webkit-scrollbar-thumb {
   display: none;
   animation-name: OnLoad;
   animation-duration: 1s;
+}
+
+.tag-elements-wrapper ul li {
+  list-style: none;
+  /* color: rgb(185, 185, 185); */
+}
+
+.tag-elements-wrapper ul li:first-child {
+  /* background: rgb(32, 32, 32); */
+  /* color: white; */
 }
