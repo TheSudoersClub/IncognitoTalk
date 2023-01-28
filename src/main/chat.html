@@ -34,16 +34,16 @@
 
   <div id="root">
     <!-- nick name prompt on load -->
-    <div class="nick-name-prompt">
+    <!-- <div class="nick-name-prompt">
       <label for="input-nick-name-prompt">Enter a Nick Name</label>
       <input autofocus type="text" id="input-nick-name-prompt">
-    </div>
+    </div> -->
 
     <!-- decryption Key -->
-    <div class="decryption-key-prompt">
+    <!-- <div class="decryption-key-prompt">
       <label for="input-decryption-key-prompt">Decryption Key</label>
       <input autofocus type="text" id="input-decryption-key-prompt">
-    </div>
+    </div> -->
 
     <!-- main app body -->
     <div class="container">
@@ -52,16 +52,31 @@
 
       <div class="prompt">
         <div class="tags"></div>
-        <form id="send-container" onsubmit="sendMessage(); return false;">
-          <input autofocus type="text" id="input-send-message" autocomplete="off">
-          <button id="send-btn" type="submit">Send</button>
-        </form>
-      </div>
+        <textarea rows="1" autofocus type="text" id="input-send-message" autocomplete="off"
+          oninput="auto_grow(this)"></textarea>
+        <script>
+          // function auto_grow(element) {
+          //   element.style.height = (element.scrollHeight) + "px";
 
+          //   var height = element.scrollHeight;
+          //   console.log(element.scrollHeight)
+
+          //   var i = 8;
+          //   element.addEventListener("input", function (e) {
+          //     if (element.scrollHeight != height) {
+          //       element.style.transform = `translateY(-${i}px)`;
+          //       height = element.scrollHeight;
+          //       i += 8;
+          //     }
+          //   });
+          // }
+        </script>
+        <button id="send-btn" type="submit" onclick="sendMessage();">Send</button>
+      </div>
     </div>
 
   </div>
-  <!-- <script src="scripts/tags.js"></script> -->
+  <script src="scripts/tags.js"></script>
 </body>
 
 </html>

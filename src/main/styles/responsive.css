@@ -26,7 +26,7 @@
   .container #chats {
     width: 90vw;
   }
-  .prompt input {
+  .prompt textarea {
     width: 20rem;
   }
 
@@ -57,7 +57,7 @@
   .prompt {
     margin-top: 2.5rem;
   }
-  .prompt input {
+  .prompt textarea {
     width: 20rem;
   }
 }
@@ -73,7 +73,7 @@
     margin-top: 3rem;
     animation-name: delay;
   }
-  .prompt input {
+  .prompt textarea {
     width: 65vw;
   }
 
@@ -101,13 +101,13 @@
 }
 
 @media screen and (max-width: 450px) {
-  .prompt input {
+  .prompt textarea {
     width: 62vw;
   }
 }
 
 @media screen and (max-width: 360px) {
-  .prompt input {
+  .prompt textarea {
     width: 60vw;
   }
   .nick-name-prompt {
@@ -121,7 +121,7 @@
 }
 
 @media screen and (max-width: 320px) {
-  .prompt input {
+  .prompt textarea {
     width: 58vw;
   }
 }
