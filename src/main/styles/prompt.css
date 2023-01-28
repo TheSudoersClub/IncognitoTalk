@@ -35,6 +35,23 @@
   transform: scale(1.25);
 }
 
+.nick-name-prompt .nna-error-wrapper{
+  /* outline: 1px solid aqua; */
+  margin-top: 15px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 17rem;
+  animation-duration: 1s;
+  display: none;
+}
+
+.nick-name-prompt .nna-error-wrapper span{
+  font-size: 14px;
+  color: rgba(102, 0, 0, 0.8);
+  font-style: italic;
+}
+
 .decryption-key-prompt {
   background: rgba(56, 56, 56, 0.15);
   width: 400px;

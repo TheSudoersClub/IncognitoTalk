@@ -42,7 +42,13 @@ document
 
 
         if (clients.includes(username)) {
-          console.log(username, "is already taken");
+          let errorMsgWrapper = document.querySelector('.nna-error-wrapper')
+          let errorMsg = document.querySelector('#nna-error')
+          errorMsg.innerText = `Nick name ${username} is not available`;
+          
+          errorMsgWrapper.style.animationName = 'shake'
+          errorMsgWrapper.style.display = 'none';
+          errorMsgWrapper.style.display = 'flex';
         }
         //
         else {
@@ -77,7 +83,7 @@ document
     }
   });
 
-  
+
 // handle tags 
 let allClientsFiltered = [];
 let tagTriggered = false;

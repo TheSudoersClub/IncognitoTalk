@@ -98,6 +98,14 @@
     padding: 10px 12px;
     width: 10rem;
   }
+
+  .nick-name-prompt .nna-error-wrapper {
+    width: 12rem;
+  }
+
+  .nick-name-prompt .nna-error-wrapper span {
+    font-size: 12px;
+  }
 }
 
 @media screen and (max-width: 450px) {
