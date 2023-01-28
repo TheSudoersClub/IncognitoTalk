@@ -1,11 +1,14 @@
 // socket server link
-const socketLink = 'bore.pub:42665';
+const socketLink = 'bore.pub:43693';
 
 // server bots
 let bots = [];
 
 // clients joined in chat 
 let clients = [];
+
+// allClients joined in chat inclining bots
+let allClients = [];
 
 // the decryption key of the server
 let key;
@@ -31,8 +34,11 @@ document
         // get the previously joined clients 
         clients = await updateClients();
 
-        // update tags div
-        renderClientsList();
+        // update allClients array
+        allClients = [...clients, ...bots];
+
+        // render new clients list 
+        renderList(allClients);
 
 
         if (clients.includes(username)) {
@@ -71,16 +77,62 @@ document
     }
   });
 
-//tag-container
-let tagContainer = document.querySelector('.tags');
+  
+// handle tags 
+let allClientsFiltered = [];
+let tagTriggered = false;
+let addToValue = false;
+let string = '@';
+let inputField = document.querySelector('#input-send-message');
+let container = document.querySelector('#tags');
 
-document.querySelector('#input-send-message').addEventListener('keydown', function (e) {
-  if (clients.length != 0 && e.key === '@') {
-    tagContainer.style.display = "flex"
+inputField.addEventListener('keydown', function (e) {
+  let wrapper = document.querySelector('.tag-elements-wrapper');
+  if (allClients.length != 0 && e.key === '@') {
+    wrapper.style.display = "flex"
+    tagTriggered = true;
+
+    renderList(allClients);
+
   } else if (e.key === ' ' || e.key === "Enter") {
-    tagContainer.style.display = "none"
+    wrapper.style.display = "none"
+    tagTriggered = false;
+  }
+
+  if (tagTriggered) {
+    if (e.key === "Backspace" && e.ctrlKey) {
+      string = '@'
+    }
+
+    // 
+    else if (e.key === 'Backspace') {
+      string = string.slice(0, -1);
+    }
+
+    //
+    else if (e.key === 'Tab') {
+      e.preventDefault();
+
+      inputField.value = '@' + container.firstChild.innerText;
+    }
+
+    //
+    else {
+      string = string + e.key;
+    }
+    string = string.replace("@", "");
+    console.log(string);
+
+    allClients.forEach(element => {
+      if (element.startsWith(string)) {
+        allClientsFiltered.push(element);
+        filterUnique(allClientsFiltered, string);
+      }
+    });
   }
 })
+
+// websocket server 
 let socket;
 
 async function initializeWebSocket() {
@@ -93,6 +145,7 @@ async function initializeWebSocket() {
 
   // if decryption key is valid
   if (validKey) {
+
     // before unloading the window (when client is disconnected from socket)
     window.onbeforeunload = function () {
       if (socket && socket.readyState === WebSocket.OPEN) {
@@ -133,6 +186,7 @@ function handleMessage(chatBox) {
   reader.addEventListener("loadend", async (event) => {
     scrollToBottom(); // scroll to bottom when new message is received
 
+    // encrypted data received from server 
     let data = reader.result;
 
     // decrypt the data received from server with decryption key
@@ -145,8 +199,11 @@ function handleMessage(chatBox) {
       // update list of joined clients (clients) 
       clients = await updateClients();
 
-      // update tags div
-      renderClientsList();
+      // update allClients array
+      allClients = [...clients, ...bots];
+
+      // render new clients list 
+      renderList(allClients);
 
       // update message
       chatBox.innerHTML += `<br><div class="user-joined">${username} joined the chat</div>`;
@@ -161,8 +218,12 @@ function handleMessage(chatBox) {
       // update list of joined clients (clients) 
       clients = await updateClients();
 
-      // update tags div
-      renderClientsList();
+      // update allClients array
+      allClients = [...clients, ...bots];
+
+      // render new clients list 
+      renderList(allClients);
+
 
       // update message
       chatBox.innerHTML += `<br><div class="user-left">${username} left the chat</div>`;
@@ -173,9 +234,7 @@ function handleMessage(chatBox) {
 
       // get the normal to check weather the message is tagged or not
       const pattern = /<span class="username">(.+?) : &nbsp;<\/span> (.+)/;
-
       const [match, parsedUsername, parsedMessage] = data.match(pattern);
-
 
       // tagged message
       if (parsedMessage.startsWith("@")) {
@@ -183,7 +242,7 @@ function handleMessage(chatBox) {
         const pattern = /@(\w+)/;
         const match = await parsedMessage.match(pattern);
 
-        // if message is tagged to us
+        // if message is tagged to user
         if (match[1] === username) {
           chatBox.innerHTML += `<div class="send-message tagged-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
         }
@@ -192,7 +251,7 @@ function handleMessage(chatBox) {
         else if (bots.includes(match[1])) {
 
           // calculator bot
-          if (match[1] == 'calculate') {
+          if (match[1] == 'calculator') {
             let expression = parsedMessage.replace(/^@\S+\s/, "");
 
             fetch(`https://incognitotalk-bots.onrender.com/calculate?expression=${encodeURIComponent(expression)}`)
@@ -210,6 +269,12 @@ function handleMessage(chatBox) {
         else {
           chatBox.innerHTML += `<div class="send-message">${data}</div>`;
         }
+
+        // reset string
+        string = '@'
+
+        // render new clients list 
+        renderList(allClients);
 
       }
 
@@ -289,6 +354,28 @@ async function getBots() {
   return data
 }
 
+function filterUnique(array, string) {
+  let newArr = [];
+  array.forEach(element => {
+    if (element.startsWith(string)) {
+      newArr.push(element);
+    }
+  });
+  let allClientsFilteredUnique = [...new Set(newArr)];
+  renderList(allClientsFilteredUnique);
+}
+
+function renderList(array) {
+  let container = document.querySelector('#tags');
+  container.innerHTML = '';
+
+  array.forEach(element => {
+    let tagElement = document.createElement("li");
+    tagElement.innerText = element;
+    container.appendChild(tagElement);
+  });
+}
+
 function encrypt(string, key) {
   return CryptoJS.AES.encrypt(string, key).toString();
 }
@@ -308,39 +395,4 @@ function playNotificationSfx() {
   if (document.hidden) {
     notificationSfx.play();
   }
-}
-
-function renderClientsList() {
-  tagContainer.innerHTML = "";
-  let tagElement;
-  let allClients = [...clients, ...bots]
-
-  allClients.forEach((element) => {
-    tagElement = document.createElement("span");
-    tagElement.innerText = element;
-
-    tagContainer.appendChild(tagElement);
-
-    console.log('client list updated');
-  });
-}
-
-function sortClientList(e) {
-  let string = '@';
-  document.querySelector('#input-send-message').addEventListener('keydown', function (e) {
-    string = string + e.key;
-    string = string.replace("@", "");
-    renderClientsListSorted(string);
-  })
-}
-
-function renderClientsListSorted(e) {
-  tagContainer.innerHTML = "";
-  let tagElement = document.createElement("span");
-  tagElement.innerText = searchArray(e);
-  tagContainer.appendChild(tagElement);
-}
-
-function searchArray(searchTerm) {
-  return clients.filter(item => item.startsWith(searchTerm));
 }
