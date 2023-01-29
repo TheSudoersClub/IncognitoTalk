@@ -54,6 +54,8 @@ async function initializeWebSocket() {
   }
 }
 
+let allowSentMessage = false;
+
 function handleMessage(chatBox) {
   const reader = new FileReader();
 
@@ -81,6 +83,9 @@ function handleMessage(chatBox) {
       // update message
       chatBox.innerHTML += `<br><div class="user-joined">${username} joined the chat</div>`;
 
+      // enable send message
+      allowSentMessage = true;
+
       playNotificationSfx();
     }
 
@@ -97,6 +102,8 @@ function handleMessage(chatBox) {
       // render new clients list 
       renderList(allClients);
 
+      // disable send message
+      allowSentMessage = false;
 
       // update message
       chatBox.innerHTML += `<br><div class="user-left">${username} left the chat</div>`;
@@ -161,7 +168,7 @@ function handleMessage(chatBox) {
 
 function sendMessage() {
   // if decryption key is valid
-  if (validKey) {
+  if (validKey && allowSentMessage) {
     // get the message from user
     let message = document.getElementById("input-send-message").value;
 
