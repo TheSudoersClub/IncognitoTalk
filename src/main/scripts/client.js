@@ -1,5 +1,5 @@
 // socket server link
-const socketLink = 'bore.pub:43693';
+const socketLink = 'bore.pub:34215';
 
 // websocket server 
 let socket;
@@ -112,6 +112,7 @@ function handleMessage(chatBox) {
     // regular message
     else {
 
+
       // get the normal to check weather the message is tagged or not
       const pattern = /<span class="username">(.+?) : &nbsp;<\/span> (.+)/;
       const [match, parsedUsername, parsedMessage] = data.match(pattern);
@@ -150,6 +151,22 @@ function handleMessage(chatBox) {
 
       }
 
+      // code box
+      else if (parsedMessage.startsWith("```") && parsedMessage.endsWith("```")) {
+        let code = parsedMessage.replace(/```/g, "");
+
+        code = code.replace(/<br\s*[\/]?>/gi, "\n");
+
+        // wrap message in pre and code elements
+        chatBox.innerHTML += `<span class="username">${parsedUsername} : &nbsp;</span><br><pre class="code-block"><code class="language-javascript">${code}</code></pre>`;
+
+        // Add syntax highlighting
+        // hljs.highlightBlock(chatBox.lastChild.lastChild);
+        Prism.highlightAll();
+
+      }
+
+
       // normal message
       else {
 
@@ -176,8 +193,26 @@ function sendMessage() {
     message = message.trimStart();
     message = message.trimEnd();
 
+    message = message
+      .replace(/&/g, "&amp;")
+      .replace(/</g, `&lt;`)
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&apos;")
+      .replace(/ /g, "&nbsp;")
+      .replace(/\u00a0/g, "&nbsp;")
+      .replace(/¢/g, "&cent;")
+      .replace(/£/g, "&pound;")
+      .replace(/¥/g, "&yen;")
+      .replace(/€/g, "&euro;")
+      .replace(/©/g, "&copy;")
+      .replace(/®/g, "&reg;")
+    console.log(message);
+
+
     // replace new line (\n) with <br>
     message = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
+
 
     if (message != "") {
       // sent encrypted message to socket server
