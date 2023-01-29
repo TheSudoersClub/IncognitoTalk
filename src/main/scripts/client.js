@@ -163,7 +163,14 @@ function sendMessage() {
   // if decryption key is valid
   if (validKey) {
     // get the message from user
-    const message = document.getElementById("input-send-message").value;
+    let message = document.getElementById("input-send-message").value;
+
+    // trim starting and ending blank new lines
+    message = message.trimStart();
+    message = message.trimEnd();
+
+    // replace new line (\n) with <br>
+    message = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
     if (message != "") {
       // sent encrypted message to socket server
