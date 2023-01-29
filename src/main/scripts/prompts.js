@@ -13,6 +13,9 @@ document
             // get the username
             username = document.getElementById("input-nick-name-prompt").value;
 
+            // convert username to lower case 
+            username = username.toLocaleLowerCase();
+
             // check weather username is valid or not 
             let usernameWords = username.split(" ");
 
