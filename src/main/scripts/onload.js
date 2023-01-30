@@ -4,7 +4,7 @@ window.addEventListener('load', async () => {
     fetch(`https://incognitotalk-bots.onrender.com/calculate?expression=${encodeURIComponent("1")}`)
         .then(response => response.text())
         .then(data => {
-            console.log(data)
+            console.log("calculator connected")
         })
         .catch(error => console.error(error));
 

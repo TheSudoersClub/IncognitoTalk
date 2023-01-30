@@ -66,7 +66,7 @@ function handleMessage(chatBox) {
 
     // "user joined" message
     if (data.startsWith("USER_JOINED: ")) {
-      const username = data.slice("USER_JOINED: ".length); // get the username of user
+      const clientUsername = data.slice("USER_JOINED: ".length); // get the username of user
 
       // update list of joined clients (clients) 
       clients = await updateClients();
@@ -78,17 +78,19 @@ function handleMessage(chatBox) {
       renderList(allClients);
 
       // update message
-      chatBox.innerHTML += `<br><div class="user-joined">${username} joined the chat</div>`;
+      chatBox.innerHTML += `<br><div class="user-joined">${clientUsername} joined the chat</div>`;
 
       // enable send message
-      allowSentMessage = true;
+      if (clientUsername === username) {
+        allowSentMessage = true;
+      }
 
       playNotificationSfx();
     }
 
     // "user joined" message
     else if (data.startsWith("USER_LEFT: ")) {
-      const username = data.slice("USER_LEFT: ".length); // get the username of user
+      const clientUsername = data.slice("USER_LEFT: ".length); // get the username of user
 
       // update list of joined clients (clients) 
       clients = await updateClients();
@@ -100,10 +102,12 @@ function handleMessage(chatBox) {
       renderList(allClients);
 
       // disable send message
-      allowSentMessage = false;
-
+      if (clientUsername === username) {
+        allowSentMessage = false;
+      }
+      
       // update message
-      chatBox.innerHTML += `<br><div class="user-left">${username} left the chat</div>`;
+      chatBox.innerHTML += `<br><div class="user-left">${clientUsername} left the chat</div>`;
     }
 
     // regular message
