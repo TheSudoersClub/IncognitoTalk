@@ -32,9 +32,6 @@ async function initializeWebSocket() {
       scrollToBottom();
     };
 
-    // get server bots
-    bots = await getBots();
-
     // handle chatBox on socket message event
     socket.onmessage = () => {
       handleMessage(chatBox);

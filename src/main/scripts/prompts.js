@@ -21,16 +21,6 @@ document
 
             if (usernameWords.length == 1 && username != '') {
 
-                // get the previously joined clients 
-                clients = await updateClients();
-
-                // update allClients array
-                allClients = [...clients, ...bots];
-
-                // render new clients list 
-                renderList(allClients);
-
-
                 if (clients.includes(username)) {
                     let errorMsgWrapper = document.querySelector('.nna-error-wrapper')
                     let errorMsg = document.querySelector('#nna-error')

@@ -41,7 +41,6 @@ inputField.addEventListener('keydown', function (e) {
             string = string + e.key;
         }
         string = string.replace("@", "");
-        console.log(string);
 
         allClients.forEach(element => {
             if (element.startsWith(string)) {
