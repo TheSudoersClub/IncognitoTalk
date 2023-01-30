@@ -21,7 +21,7 @@ document
 
             if (usernameWords.length == 1 && username != '') {
 
-                if (clients.includes(username)) {
+                if (allClients.includes(username)) {
                     let errorMsgWrapper = document.querySelector('.nna-error-wrapper')
                     let errorMsg = document.querySelector('#nna-error')
                     errorMsg.innerText = `Nick name ${username} is not available`;
