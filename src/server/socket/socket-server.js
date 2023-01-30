@@ -26,7 +26,7 @@ const clients = []; // Create an array to store connected clients
 
 let nicknames = []; // array on nicknames of joined clients to server 
 
-let bots = ["calculator"] // array of server bots
+let bots = ["calculator", "translator"] // array of server bots
 
 wss.on("connection", (ws) => {
   // When a new client connects

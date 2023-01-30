@@ -105,7 +105,7 @@ function handleMessage(chatBox) {
       if (clientUsername === username) {
         allowSentMessage = false;
       }
-      
+
       // update message
       chatBox.innerHTML += `<br><div class="user-left">${clientUsername} left the chat</div>`;
     }
@@ -136,6 +136,11 @@ function handleMessage(chatBox) {
           // calculator bot
           if (match[1] == 'calculator') {
             await calculator(parsedMessage, parsedUsername, data);
+          }
+
+          // translator bot
+          else if (match[1] == 'translator') {
+            await translator(parsedMessage, parsedUsername);
           }
         }
 
