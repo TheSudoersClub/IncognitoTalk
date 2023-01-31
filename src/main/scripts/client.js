@@ -110,9 +110,8 @@ function handleMessage(chatBox) {
       chatBox.innerHTML += `<br><div class="user-left">${clientUsername} left the chat</div>`;
     }
 
-    // regular message
+    // other message
     else {
-
 
       // get the normal to check weather the message is tagged or not
       const pattern = /<span class="username">(.+?) : &nbsp;<\/span> (.+)/;
@@ -141,6 +140,11 @@ function handleMessage(chatBox) {
           // translator bot
           else if (match[1] == 'translator') {
             await translator(parsedMessage, parsedUsername);
+          }
+
+          // compiler bot
+          else if (match[1] == 'compiler') {
+            await compiler(parsedMessage, parsedUsername);
           }
         }
 

@@ -1,9 +1,10 @@
+const chatBox = document.getElementById("chats");
+
+
 // calculator bot
 async function calculator(parsedMessage, parsedUsername, data, ) {
 
   let expression = await parsedMessage.replace(/^@\S+\s/, "");
-
-  const chatBox = document.getElementById("chats");
 
   fetch(`https://incognitotalk-bots.onrender.com/calculate?expression=${encodeURIComponent(expression)}`)
     .then(response => response.text())
@@ -19,15 +20,13 @@ async function calculator(parsedMessage, parsedUsername, data, ) {
 async function translator(parsedMessage, parsedUsername) {
 
   let message = await parsedMessage.replace(/^@\S+\s/, "");
-  console.log(message)
+
   let words = await message.split(" ");
   let translateLang = await words[0];
   let translateText = await words.slice(1).join(" ");
 
   // convert language in 2 letter code
   translateLang = get2LetterCode(translateLang);
-
-  const chatBox = document.getElementById("chats");
 
   var url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${translateLang}&dt=t&q=${encodeURI(translateText)}`;
 
@@ -42,6 +41,61 @@ async function translator(parsedMessage, parsedUsername) {
       console.error(error);
     });
 }
+
+
+// compiler bot (c/c++, python, java)
+async function compiler(parsedMessage, parsedUsername) {
+
+  const supportedLanguages = ["c", "cpp", "python", "java"];
+
+  let message = await parsedMessage.replace(/^@\S+\s/, "");
+
+  // programming language 
+  let words = await message.split(" ");
+  let programmingLang = await words[0].toLowerCase();
+  programmingLang = programmingLang.split("<br>")[0];
+
+  // code to compile
+  code = await words.slice(1).join(" ");
+  code = await parseHTML(code);
+
+  // input for code
+  let input = ''
+
+  console.log(programmingLang)
+  if (supportedLanguages.includes(programmingLang)) {
+
+
+    // alternate names for some languages
+    if (programmingLang === 'c' || programmingLang === 'c++') {
+      programmingLang = await "cpp";
+    } else if (programmingLang === 'py') {
+      programmingLang = await "python"
+    }
+
+    fetch(`http://147.185.221.223:26819/compiler?lang=${encodeURIComponent(programmingLang)}&input=${encodeURIComponent(input)}&code=${encodeURIComponent(code)}`)
+
+      .then(res => res.json())
+      .then(async (data) => {
+        // wrap message in pre and code elements
+        code = await stringifyHTML(code);
+        chatBox.innerHTML += `<span class="username">${parsedUsername} : &nbsp;</span>@compiler ${programmingLang.trimStart()}<pre class="code-block"><code class="language-javascript">${code}</code></pre>`;
+        chatBox.innerHTML += `<div class="send-message"><span class="username">${programmingLang} : &nbsp;</span><br>Output: ${data.stdout}<br>Error: ${data.stderr}<br>Status: ${data.statusMes}  </div>`;
+
+        Prism.highlightAll();
+
+        scrollToBottom();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  } else {
+    chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
+    chatBox.innerHTML += `<div class="send-message"><span class="username">Compiler : &nbsp;</span><br>Programming language not supported<br>Usage: @compiler [c, cpp, python, java] [code]</div>`;
+  }
+
+}
+
 
 // convert language name into 2 letter code
 function get2LetterCode(fullLanguageName) {
