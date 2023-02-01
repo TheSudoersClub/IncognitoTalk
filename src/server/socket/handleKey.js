@@ -7,7 +7,7 @@ const fs = require('fs');
 let key = "IT-" + crypto.randomBytes(4).toString('hex').slice(0, 8);
 
 // save the key in file key.txt
-fs.writeFile('key.txt', (key), (err) => {
+fs.writeFile('../socket/key.txt', (key), (err) => {
     if (err) throw err;
 });
 
@@ -17,7 +17,7 @@ setTimeout(() => {
     key = hash.digest('hex');
 
     // update the key with hashed key
-    fs.writeFile('encrypted-key.txt', (key), (err) => {
+    fs.writeFile('../socket/encrypted-key.txt', (key), (err) => {
         if (err) throw err;
     });
 }, 10000);

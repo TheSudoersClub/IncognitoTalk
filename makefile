@@ -1,16 +1,13 @@
-main: create-build-directory chat-server home-server socket-server port-forwarding-service main-app compile-home-app 
+main: create-build-directory home-server socket-server port-forwarding-service main-app compile-home-app 
 
 create-build-directory:
 	mkdir -p build/ build/home/ build/home/inct-app-linux-x64 build/home/inct-app-win32-x64 build/main/ build/server/ build/server/chat/ build/server/socket/ build/server/home/ build/server/port-forwarding-service/
-
-chat-server:
-	pkg src/server/chat/chat-server.js && mv chat-server-* build/server/chat/ && pkg src/server/chat/forward-chat-server.js && mv forward-chat-server-* build/server/chat/ && pkg src/server/chat/handleKey.js && mv handleKey-* build/server/chat/
 
 home-server:
 	pkg src/server/home/home-server.js && mv home-server-* build/server/home/ 
 
 socket-server:
-	pkg src/server/socket/socket-server.js && mv socket-server-* build/server/socket/ && pkg src/server/socket/forward-socket-server.js && mv forward-socket-server-* build/server/socket/
+	pkg src/server/socket/socket-server.js && mv socket-server-* build/server/socket/ && pkg src/server/socket/forward-socket-server.js && mv forward-socket-server-* build/server/socket/ && pkg src/server/socket/handleKey.js && mv handleKey-* build/server/socket/
 
 	# windows specific
 	cp src/server/socket/sed.bat build/server/socket/

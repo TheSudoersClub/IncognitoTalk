@@ -9,18 +9,9 @@ const server = require('http').createServer(app);
 
 const wss = new WebSocket.Server({
   // create a new WebSocket server
-  server
+  server,
+  path: '/socket'
 });
-
-app.use((req, res, next) => {
-
-  // Set CORS headers
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
-
 
 const clients = []; // Create an array to store connected clients
 
@@ -57,6 +48,59 @@ wss.on("connection", (ws) => {
   });
 });
 
+app.use((req, res, next) => {
+
+  // Set CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
+
+
+app.use(express.static('../../main')); // Serve static files from the 'public' directory
+
+// host client 
+app.get('/', (req, res) => {
+  fs.readFile('../../main/chat.html', function (err, data) {
+    if (err) {
+      res.writeHead(500, {
+        'Content-Type': 'text/plain'
+      });
+      res.end('Error loading chat.html');
+    } else {
+      res.writeHead(200, {
+        'Content-Type': 'text/html'
+      });
+      res.end(data);
+    }
+  });
+})
+
+// end point for nicknames 
+app.get('/compare-hash', (req, res) => {
+  // get the real hash
+  let serverHash = fs.readFileSync('encrypted-key.txt', 'utf8').toString();
+
+  // get the client hash
+  let clientHash = decodeURIComponent(req.query.hash);
+
+  console.log(clientHash, serverHash);
+
+  // if hash is matched then sent success (true)
+  if (clientHash === serverHash) {
+    res.send(JSON.stringify({
+      success: true
+    }));
+  }
+  // if hash is not matched then send !success (false)
+  else {
+    res.send(JSON.stringify({
+      success: false
+    }));
+  }
+});
+
 // end point for nicknames 
 app.get('/clients-joined', (req, res) => {
   res.send(JSON.stringify(nicknames));
@@ -71,7 +115,7 @@ app.get('/bots', (req, res) => {
 async function updateNicknames(message) {
 
   // get the decryption key of server 
-  let decryptionKey = fs.readFileSync('../chat/key.txt', 'utf8').toString();
+  let decryptionKey = fs.readFileSync('key.txt', 'utf8').toString();
 
   // decode the message to string
   let decodedMessage = Buffer.from(message, 'hex').toString();

@@ -38,26 +38,8 @@ http.createServer(function (request, response) {
             });
 
 
-            // start chat-server locally
-            exec('cd ..\\chat\\ &&  .\\chat-server-win.exe', (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`Error: ${error}`);
-                    return;
-                }
-
-            });
-
-            // forward chat-server port
-            exec('cd ..\\chat\\ &&  .\\forward-chat-server-win.exe', (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`Error: ${error}`);
-                    return;
-                }
-
-            });
-
             // Generate and handle encryption-decryption key
-            exec('cd ..\\chat\\ &&  .\\handleKey-win.exe', (error, stdout, stderr) => {
+            exec('cd ..\\socket\\ &&  .\\handleKey-win.exe', (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Error: ${error}`);
                     return;
@@ -89,26 +71,8 @@ http.createServer(function (request, response) {
             });
 
 
-            // start chat-server locally
-            exec('cd ../chat/ &&  ./chat-server-linux', (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`Error: ${error}`);
-                    return;
-                }
-
-            });
-
-            // forward chat-server port
-            exec('cd ../chat/ &&  ./forward-chat-server-linux', (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`Error: ${error}`);
-                    return;
-                }
-
-            });
-
             // Generate and handle encryption-decryption key
-            exec('cd ../chat/ &&  ./handleKey-linux', (error, stdout, stderr) => {
+            exec('cd ../socket/ &&  ./handleKey-linux', (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Error: ${error}`);
                     return;
@@ -129,7 +93,7 @@ http.createServer(function (request, response) {
     else if (request.url === '/inviteLink') {
         // read invite link and decryption key
         setTimeout(() => {
-            fs.readFile('../chat/link.txt', 'utf8', (err, data) => {
+            fs.readFile('../socket/link.txt', 'utf8', (err, data) => {
                 if (err) throw err;
 
                 response.writeHead(200, {
@@ -145,7 +109,7 @@ http.createServer(function (request, response) {
     // send decryption key 
     else if (request.url === '/key') {
         setTimeout(() => {
-            fs.readFile('../chat/key.txt', 'utf8', (err, data) => {
+            fs.readFile('../socket/key.txt', 'utf8', (err, data) => {
                 if (err) throw err;
 
                 response.writeHead(200, {

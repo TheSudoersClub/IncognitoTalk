@@ -1,11 +1,18 @@
-// socket server link
-const socketLink = 'socket link to be replaced';
+// address/url of webpage
+const URL = window.location.href;
+
+// get url (remove http:// or https://)
+const SOCKETLINK = URL.split("://")[1];
+
+// get the protocol of the website (http or https)
+const PROTOCOL = SOCKETLINK.startsWith("https") ? "wss://" : "ws://";
+
 
 // websocket server 
 let socket;
 
 async function initializeWebSocket() {
-  socket = new WebSocket(`ws://${socketLink}`);
+  socket = new WebSocket(`${PROTOCOL}${SOCKETLINK}socket`);
 
   const chatBox = document.getElementById("chats");
 

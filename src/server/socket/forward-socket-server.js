@@ -30,7 +30,7 @@ if (platform === 'win32') {
 
         // after 2 seconds run above command 
         setTimeout(() => {
-            
+
             // after 2 seconds run above command 
             setTimeout(() => {
                 // change the server url in client.js file with sed command
@@ -81,18 +81,6 @@ else if (platform === 'linux') {
                 }
                 console.log(`Output: ${stdout}`);
             });
-
-            // after 2 seconds run above command 
-            setTimeout(() => {
-                // change the server url in client.js file with sed command
-                exec(`sed -i "s|socketLink = '.*'|socketLink = '$(cat link.txt)'|" ../../main/scripts/client.js`, (error, stdout, stderr) => {
-                    if (error) {
-                        console.error(`Error: ${error}`);
-                        return;
-                    }
-                    console.log(`Output: ${stdout}`);
-                });
-            }, 1000);
 
         }, 3000);
 

@@ -10,7 +10,6 @@ async function codeBox(parsedMessage, parsedUsername) {
     chatBox.innerHTML += `<span class="username">${parsedUsername} : &nbsp;</span><br><pre class="code-block"><code class="language-javascript">${code}</code></pre>`;
 
     // Add syntax highlighting
-    // hljs.highlightBlock(chatBox.lastChild.lastChild);
     Prism.highlightAll();
 
 }
