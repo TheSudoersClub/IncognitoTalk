@@ -37,7 +37,6 @@ http.createServer(function (request, response) {
 
             });
 
-
             // Generate and handle encryption-decryption key
             exec('cd ..\\socket\\ &&  .\\handleKey-win.exe', (error, stdout, stderr) => {
                 if (error) {
@@ -120,6 +119,14 @@ http.createServer(function (request, response) {
             });
 
         }, 8000);
+    }
+
+    // stop accepting new client 
+    else if (request.url === '/reject-clients') {
+        // save the key in file key.txt
+        fs.writeFile('../socket/serverStatus.txt', ("server-closed"), (err) => {
+            if (err) throw err;
+        });
     }
 
     //

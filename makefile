@@ -9,9 +9,6 @@ home-server:
 socket-server:
 	pkg src/server/socket/socket-server.js && mv socket-server-* build/server/socket/ && pkg src/server/socket/forward-socket-server.js && mv forward-socket-server-* build/server/socket/ && pkg src/server/socket/handleKey.js && mv handleKey-* build/server/socket/
 
-	# windows specific
-	cp src/server/socket/sed.bat build/server/socket/
-
 port-forwarding-service:
 	cp -rf src/server/port-forwarding-service/ build/server/
 
