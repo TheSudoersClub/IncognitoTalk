@@ -124,9 +124,28 @@ http.createServer(function (request, response) {
     // stop accepting new client 
     else if (request.url === '/reject-clients') {
         // save the key in file key.txt
-        fs.writeFile('../socket/serverStatus.txt', ("server-closed"), (err) => {
+        fs.writeFileSync('../socket/serverStatus.txt', ("server-closed"), (err) => {
             if (err) throw err;
         });
+        response.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+
+        response.end("server-closed");
+    }
+
+    // stop accepting new client 
+    else if (request.url === '/accept-clients') {
+        // save the key in file key.txt
+        fs.writeFileSync('../socket/serverStatus.txt', ("server-opened"), (err) => {
+            if (err) throw err;
+        });
+
+        response.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+
+        response.end("server-opened");
     }
 
     //
