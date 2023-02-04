@@ -176,3 +176,11 @@ textarea::-webkit-scrollbar-thumb {
   color: white;
   font-weight: 700;
 }
+
+.encrypted-message {
+  color: rgba(102, 0, 0, 0.8);
+  font-style: italic;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 0.8rem;
+}
