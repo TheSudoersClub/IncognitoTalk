@@ -49,11 +49,11 @@ async function initializeWebSocket() {
   else {
 
     socket.onopen = () => {
-      chatBox.innerHTML += `<div class="send-message encrypted-message">message encrypted: invalid decryption key, unable to decrypt the message</div>`;
+      chatBox.innerHTML += `<div class="send-message encrypted-message">packet encrypted: invalid decryption key</div>`;
     };
 
     socket.onmessage = () => {
-      chatBox.innerHTML += `<div class="send-message encrypted-message">message encrypted: invalid decryption key, unable to decrypt the message</div>`;
+      chatBox.innerHTML += `<div class="send-message encrypted-message">packet encrypted: invalid decryption key</div>`;
     };
   }
 }
