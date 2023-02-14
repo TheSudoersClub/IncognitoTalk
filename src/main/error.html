@@ -1,1 +1,71 @@
-server full
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+        }
+
+        body {
+            background: rgb(22, 22, 22);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .server-image img {
+            width: 10rem;
+        }
+
+        .error-message {
+            text-align: center;
+        }
+
+        .error-message p {
+            font-weight: 700;
+        }
+
+        .error-message span {
+            font-style: italic;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        @media screen and (max-width: 415px) {
+            .error-message p {
+                font-size: 12px;
+            }
+
+            .error-message span {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="server-image">
+            <img src="assets/images/cloud-server.png" alt="Server">
+        </div>
+        <div class="error-message">
+            <p>Server is not accepting requests anymore...</p>
+            <span>For more information please contact the host</span>
+        </div>
+    </div>
+</body>
+
+</html>
