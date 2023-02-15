@@ -52,3 +52,17 @@ function playNotificationSfx() {
         notificationSfx.play();
     }
 }
+
+function validateUsername(username) {
+    // convert username to lower case 
+    username = username.toLocaleLowerCase();
+
+    // check weather username is valid or not 
+    let usernameWords = username.split(" ");
+
+    if (usernameWords.length == 1 && username != '') {
+        return true;
+    } else {
+        return false;
+    }
+}

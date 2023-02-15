@@ -13,14 +13,9 @@ document
             // get the username
             username = document.getElementById("input-nick-name-prompt").value;
 
-            // convert username to lower case 
-            username = username.toLocaleLowerCase();
+            if (validateUsername(username)) {
 
-            // check weather username is valid or not 
-            let usernameWords = username.split(" ");
-
-            if (usernameWords.length == 1 && username != '') {
-
+                // check weather the same username already exists
                 if (allClients.includes(username)) {
                     let errorMsgWrapper = document.querySelector('.nna-error-wrapper')
                     let errorMsg = document.querySelector('#nna-error')
@@ -30,7 +25,7 @@ document
                     errorMsgWrapper.style.display = 'none';
                     errorMsgWrapper.style.display = 'flex';
                 }
-                // 
+                // if username is valid and unique
                 else {
                     document.querySelector(".nick-name-prompt").style.display = "none";
 
