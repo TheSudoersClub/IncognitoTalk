@@ -13,6 +13,7 @@ document
             // get the username
             username = document.getElementById("input-nick-name-prompt").value;
 
+            // check for username validation
             if (validateUsername(username)) {
 
                 // check weather the same username already exists
@@ -25,6 +26,7 @@ document
                     errorMsgWrapper.style.display = 'none';
                     errorMsgWrapper.style.display = 'flex';
                 }
+
                 // if username is valid and unique
                 else {
                     document.querySelector(".nick-name-prompt").style.display = "none";
@@ -52,9 +54,17 @@ document
                         });
                 }
             }
-            //
+
+            // handle invalid username case
             else {
-                console.log("username not allowed");
+                // console.log("username is not valid");
+                let errorMsgWrapper = document.querySelector('.nna-error-wrapper')
+                let errorMsg = document.querySelector('#nna-error')
+                errorMsg.innerText = `Nick name ${username} is not valid`;
+
+                errorMsgWrapper.style.animationName = 'shake'
+                errorMsgWrapper.style.display = 'none';
+                errorMsgWrapper.style.display = 'flex';
             }
 
         }

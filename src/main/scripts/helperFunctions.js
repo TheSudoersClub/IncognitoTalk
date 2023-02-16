@@ -57,12 +57,9 @@ function validateUsername(username) {
     // convert username to lower case 
     username = username.toLocaleLowerCase();
 
-    // check weather username is valid or not 
-    let usernameWords = username.split(" ");
+    // check for validation
+    const regex = /^[a-zA-Z0-9_]+$/; // Regular expression that matches only letters, numbers, and underscores
 
-    if (usernameWords.length == 1 && username != '') {
-        return true;
-    } else {
-        return false;
-    }
+    // return validation result
+    return regex.test(username)
 }
