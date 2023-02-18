@@ -6,7 +6,7 @@ async function validateKey(key) {
     // hash the entered key
     const hash = CryptoJS.SHA256(key).toString();
     
-    return fetch(`${window.location.href}compare-hash?hash=${encodeURIComponent(hash)}`)
+    return fetch(`/compare-hash?hash=${encodeURIComponent(hash)}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {

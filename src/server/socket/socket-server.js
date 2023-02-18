@@ -62,11 +62,6 @@ wss.on("connection", (ws) => {
 
 // handle routes
 app.use((req, res, next) => {
-
-  // Set CORS headers
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
 
