@@ -213,13 +213,12 @@ async function sendMessage() {
 
       // message for translator supported_languages
       if (message == "@translator supported_languages") {
-        await translator(message);
-        return
+        await translator(message, username);
+
       }
     }
-
     // handle normal message
-    if (message != "") {
+    else if (message != "") {
       // sent encrypted message to socket server
       socket.send(
         encrypt(
@@ -228,8 +227,9 @@ async function sendMessage() {
         )
       );
 
-      // clear the input when message is send
-      document.getElementById("input-send-message").value = "";
     }
   }
+
+  // clear the input when message is send
+  document.getElementById("input-send-message").value = "";
 }
