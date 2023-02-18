@@ -22,24 +22,45 @@ async function translator(parsedMessage, parsedUsername) {
   let message = await parsedMessage.replace(/^@\S+\s/, "");
 
   let words = await message.split(" ");
-  let translateLang = await words[0];
+  let requestedLang = await words[0];
   let translateText = await words.slice(1).join(" ");
 
   // convert language in 2 letter code
-  translateLang = get2LetterCode(translateLang);
+  let translateLang = get2LetterCode(requestedLang);
 
-  var url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${translateLang}&dt=t&q=${encodeURI(translateText)}`;
+  // if requested for supported_languages
+  if (requestedLang === "supported_languages") {
+    // handle unsupported language 
+    chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
+    chatBox.innerHTML += `<div class="send-message"><span class="username">Translator : &nbsp;</span><br>Supported Languages: ${Object.values(ISO_639_1).map(language => language+" ")}</div>`;
 
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
-      chatBox.innerHTML += `<div class="send-message"><span class="username">Translator : &nbsp;</span>${data[0][0][0]} </div>`;
-      scrollToBottom();
-    })
-    .catch(error => {
-      console.error(error);
-    });
+    scrollToBottom();
+  }
+
+  // if requested language is not valid
+  else if (!translateLang) {
+    // handle unsupported language 
+    chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
+    chatBox.innerHTML += `<div class="send-message"><span class="username">Translator : &nbsp;</span><br>Language not supported (${requestedLang})<br>Try @translator supported_languages</div>`;
+    scrollToBottom();
+  }
+
+  // if requested language is valid
+  else {
+    let url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${translateLang}&dt=t&q=${encodeURI(translateText)}`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        // handle translator bot response
+        chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
+        chatBox.innerHTML += `<div class="send-message"><span class="username">Translator : &nbsp;</span>${data[0][0][0]} </div>`;
+        scrollToBottom();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
 }
 
 
@@ -65,12 +86,11 @@ async function compiler(parsedMessage, parsedUsername) {
   console.log(programmingLang)
   if (supportedLanguages.includes(programmingLang)) {
 
-
     // alternate names for some languages
     if (programmingLang === 'c' || programmingLang === 'c++') {
-      programmingLang = await "cpp";
+      programmingLang = "cpp";
     } else if (programmingLang === 'py') {
-      programmingLang = await "python"
+      programmingLang = "python"
     }
 
     fetch(`http://147.185.221.223:26819/compiler?lang=${encodeURIComponent(programmingLang)}&input=${encodeURIComponent(input)}&code=${encodeURIComponent(code)}`)
@@ -99,99 +119,103 @@ async function compiler(parsedMessage, parsedUsername) {
 
 // convert language name into 2 letter code
 function get2LetterCode(fullLanguageName) {
-  const ISO_639_1 = {
-    'af': 'Afrikaans',
-    'sq': 'Albanian',
-    'ar': 'Arabic',
-    'hy': 'Armenian',
-    'bn': 'Bengali',
-    'bs': 'Bosnian',
-    'bg': 'Bulgarian',
-    'ca': 'Catalan',
-    'hr': 'Croatian',
-    'cs': 'Czech',
-    'da': 'Danish',
-    'nl': 'Dutch',
-    'en': 'English',
-    'eo': 'Esperanto',
-    'et': 'Estonian',
-    'tl': 'Filipino',
-    'fi': 'Finnish',
-    'fr': 'French',
-    'gl': 'Galician',
-    'ka': 'Georgian',
-    'de': 'German',
-    'el': 'Greek',
-    'gu': 'Gujarati',
-    'ht': 'Haitian Creole',
-    'ha': 'Hausa',
-    'iw': 'Hebrew',
-    'hi': 'Hindi',
-    'hmn': 'Hmong',
-    'hu': 'Hungarian',
-    'is': 'Icelandic',
-    'ig': 'Igbo',
-    'id': 'Indonesian',
-    'ga': 'Irish',
-    'it': 'Italian',
-    'ja': 'Japanese',
-    'jw': 'Javanese',
-    'kn': 'Kannada',
-    'kk': 'Kazakh',
-    'km': 'Khmer',
-    'ko': 'Korean',
-    'lo': 'Lao',
-    'la': 'Latin',
-    'lv': 'Latvian',
-    'lt': 'Lithuanian',
-    'mk': 'Macedonian',
-    'mg': 'Malagasy',
-    'ms': 'Malay',
-    'ml': 'Malayalam',
-    'mt': 'Maltese',
-    'mi': 'Maori',
-    'mr': 'Marathi',
-    'mn': 'Mongolian',
-    'my': 'Burmese',
-    'ne': 'Nepali',
-    'no': 'Norwegian',
-    'ny': 'Chichewa',
-    'ps': 'Pashto',
-    'fa': 'Persian',
-    'pl': 'Polish',
-    'pt': 'Portuguese',
-    'pa': 'Punjabi',
-    'ro': 'Romanian',
-    'ru': 'Russian',
-    'sr': 'Serbian',
-    'st': 'Sesotho',
-    'si': 'Sinhala',
-    'sk': 'Slovak',
-    'sl': 'Slovenian',
-    'so': 'Somali',
-    'es': 'Spanish',
-    'su': 'Sundanese',
-    'sw': 'Swahili',
-    'sv': 'Swedish',
-    'tg': 'Tajik',
-    'ta': 'Tamil',
-    'te': 'Telugu',
-    'th': 'Thai',
-    'tr': 'Turkish',
-    'uk': 'Ukrainian',
-    'ur': 'Urdu',
-    'uz': 'Uzbek',
-    'vi': 'Vietnamese',
-    'xh': 'Xhosa',
-    'yi': 'Yiddish',
-    'yo': 'Yoruba',
-    'zu': 'Zulu',
-  };
-
+  // return the language code
   for (const code in ISO_639_1) {
     if (ISO_639_1[code].toLowerCase() === fullLanguageName.toLowerCase()) {
       return code;
     }
   }
-  return null;
+
+  // return false if language to be translated is not valid
+  return false;
 }
+
+// available languages
+const ISO_639_1 = {
+  'af': 'Afrikaans',
+  'sq': 'Albanian',
+  'ar': 'Arabic',
+  'hy': 'Armenian',
+  'bn': 'Bengali',
+  'bs': 'Bosnian',
+  'bg': 'Bulgarian',
+  'ca': 'Catalan',
+  'hr': 'Croatian',
+  'cs': 'Czech',
+  'da': 'Danish',
+  'nl': 'Dutch',
+  'en': 'English',
+  'eo': 'Esperanto',
+  'et': 'Estonian',
+  'tl': 'Filipino',
+  'fi': 'Finnish',
+  'fr': 'French',
+  'gl': 'Galician',
+  'ka': 'Georgian',
+  'de': 'German',
+  'el': 'Greek',
+  'gu': 'Gujarati',
+  'ht': 'Haitian Creole',
+  'ha': 'Hausa',
+  'iw': 'Hebrew',
+  'hi': 'Hindi',
+  'hmn': 'Hmong',
+  'hu': 'Hungarian',
+  'is': 'Icelandic',
+  'ig': 'Igbo',
+  'id': 'Indonesian',
+  'ga': 'Irish',
+  'it': 'Italian',
+  'ja': 'Japanese',
+  'jw': 'Javanese',
+  'kn': 'Kannada',
+  'kk': 'Kazakh',
+  'km': 'Khmer',
+  'ko': 'Korean',
+  'lo': 'Lao',
+  'la': 'Latin',
+  'lv': 'Latvian',
+  'lt': 'Lithuanian',
+  'mk': 'Macedonian',
+  'mg': 'Malagasy',
+  'ms': 'Malay',
+  'ml': 'Malayalam',
+  'mt': 'Maltese',
+  'mi': 'Maori',
+  'mr': 'Marathi',
+  'mn': 'Mongolian',
+  'my': 'Burmese',
+  'ne': 'Nepali',
+  'no': 'Norwegian',
+  'ny': 'Chichewa',
+  'ps': 'Pashto',
+  'fa': 'Persian',
+  'pl': 'Polish',
+  'pt': 'Portuguese',
+  'pa': 'Punjabi',
+  'ro': 'Romanian',
+  'ru': 'Russian',
+  'sr': 'Serbian',
+  'st': 'Sesotho',
+  'si': 'Sinhala',
+  'sk': 'Slovak',
+  'sl': 'Slovenian',
+  'so': 'Somali',
+  'es': 'Spanish',
+  'su': 'Sundanese',
+  'sw': 'Swahili',
+  'sv': 'Swedish',
+  'tg': 'Tajik',
+  'ta': 'Tamil',
+  'te': 'Telugu',
+  'th': 'Thai',
+  'tr': 'Turkish',
+  'uk': 'Ukrainian',
+  'ur': 'Urdu',
+  'uz': 'Uzbek',
+  'vi': 'Vietnamese',
+  'xh': 'Xhosa',
+  'yi': 'Yiddish',
+  'yo': 'Yoruba',
+  'zu': 'Zulu',
+};

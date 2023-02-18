@@ -173,7 +173,6 @@ function handleMessage(chatBox) {
         await codeBox(parsedMessage, parsedUsername)
       }
 
-
       // normal message
       else {
 
@@ -191,6 +190,10 @@ function handleMessage(chatBox) {
 }
 
 async function sendMessage() {
+
+  // messages that has to be ignored and not to be send
+  const invalidMessages = ["@translator supported_languages"];
+
   // if decryption key is valid
   if (validKey && allowSentMessage) {
     // get the message from user
@@ -205,7 +208,17 @@ async function sendMessage() {
     // replace new line (\n) with <br>
     message = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
+    // handle ignored messages
+    if (invalidMessages.includes(message)) {
 
+      // message for translator supported_languages
+      if (message == "@translator supported_languages") {
+        await translator(message);
+        return
+      }
+    }
+
+    // handle normal message
     if (message != "") {
       // sent encrypted message to socket server
       socket.send(
