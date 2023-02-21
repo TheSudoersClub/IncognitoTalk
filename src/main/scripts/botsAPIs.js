@@ -189,7 +189,7 @@ async function compiler(parsedMessage, parsedUsername) {
 
 }
 
-// helper bot for
+// helper bot
 async function help(helpMessage, username) {
   let message = await helpMessage.replace(/^@(\S+\s|\s*$)/, "").toLowerCase();
 
@@ -233,6 +233,9 @@ async function help(helpMessage, username) {
         <br>
         <span style="font-weight: bolder;">Supported Languages:</span> ${Object.values(ISO_639_1).map(language => language+" ").join('')}
       </div>`;
+
+    scrollToBottom();
+
   }
   // compiler bot help 
   else if (message === "compiler") {
