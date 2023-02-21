@@ -26,7 +26,7 @@ const clients = []; // Create an array to store connected clients
 
 let nicknames = []; // array on nicknames of joined clients to server 
 
-let bots = ["calculator", "translator", "compiler"] // array of server bots
+let bots = ["calculator", "translator", "compiler", "help"] // array of server bots
 
 
 // handle websocket 

@@ -1,11 +1,10 @@
 const chatBox = document.getElementById("chats");
 
-
 // calculator bot
 async function calculator(parsedMessage, parsedUsername, data, ) {
 
   // get the expression
-  let expression = await parsedMessage.replace(/^@\S+\s/, "");
+  let expression = await parsedMessage.replace(/^@(\S+\s|\s*$)/, "");
 
   // fetch the bot response
   fetch(`https://incognitotalk-bots.onrender.com/calculate?expression=${encodeURIComponent(expression)}`)
@@ -15,8 +14,8 @@ async function calculator(parsedMessage, parsedUsername, data, ) {
       chatBox.innerHTML += `
         <div class="send-message">
           <span class="username">${parsedUsername} : &nbsp;</span>
-          <span class="tagged">@calculator </span>
-          ${expression}
+          <span class="tagged">@calculator</span> ${expression} 
+         
         </div>`;
 
       // bot response
@@ -29,12 +28,14 @@ async function calculator(parsedMessage, parsedUsername, data, ) {
       scrollToBottom();
     })
     .catch(error => console.error(error));
+
 }
 
 // translator bot
 async function translator(parsedMessage, parsedUsername) {
 
-  let message = await parsedMessage.replace(/^@\S+\s/, "");
+  // get the message (data) provided after @tag
+  let message = await parsedMessage.replace(/^@(\S+\s|\s*$)/, "");
 
   let words = await message.split(" ");
   let requestedLang = await words[0];
@@ -43,30 +44,8 @@ async function translator(parsedMessage, parsedUsername) {
   // convert language in 2 letter code
   let translateLang = get2LetterCode(requestedLang);
 
-  // if requested for supported_languages
-  if (requestedLang === "supported_languages") {
-    // handle unsupported language 
-
-    // send message
-    chatBox.innerHTML += `
-      <div class="send-message">
-        <span class="username">${parsedUsername} : &nbsp;</span>
-        <span class="tagged">@translator</span> ${message} 
-      </div>`;
-
-    // bot response
-    chatBox.innerHTML += `
-      <div class="send-message">
-        <span class="username">Translator : &nbsp;</span>
-        <br>
-        Supported Languages: ${Object.values(ISO_639_1).map(language => language+" ")}
-      </div>`;
-
-    scrollToBottom();
-  }
-
   // if requested language is not valid
-  else if (!translateLang) {
+  if (!translateLang) {
     // handle unsupported language
     // send message 
     chatBox.innerHTML += `
@@ -82,7 +61,7 @@ async function translator(parsedMessage, parsedUsername) {
         <br>
         Language not supported (${requestedLang})
         <br>
-        Try @translator supported_languages
+        Try @help translator
       </div>`;
 
     scrollToBottom();
@@ -120,13 +99,12 @@ async function translator(parsedMessage, parsedUsername) {
   }
 }
 
-
 // compiler bot (c/c++, python, java)
 async function compiler(parsedMessage, parsedUsername) {
 
   const supportedLanguages = ["c", "cpp", "python", "java"];
 
-  let message = await parsedMessage.replace(/^@\S+\s/, "");
+  let message = await parsedMessage.replace(/^@(\S+\s|\s*$)/, "");
 
   // programming language 
   let words = await message.split(" ");
@@ -140,7 +118,7 @@ async function compiler(parsedMessage, parsedUsername) {
   // input for code
   let input = ''
 
-  console.log(programmingLang)
+  // for valid languages
   if (supportedLanguages.includes(programmingLang)) {
 
     // alternate names for some languages
@@ -187,7 +165,9 @@ async function compiler(parsedMessage, parsedUsername) {
       .catch(error => {
         console.error(error);
       });
-  } else {
+  }
+  // handle invalid language
+  else {
     // send message
     chatBox.innerHTML += `
       <div class="send-message">
@@ -202,12 +182,83 @@ async function compiler(parsedMessage, parsedUsername) {
         <br>
         Programming language not supported
         <br>
-        Usage: @compiler [c, cpp, python, java] [code]
+        Try @help compiler
+
       </div>`;
   }
 
 }
 
+// helper bot for
+async function help(helpMessage, username) {
+  let message = await helpMessage.replace(/^@(\S+\s|\s*$)/, "").toLowerCase();
+
+  // bots help
+  // calculator bot help
+  if (message === "calculator") {
+    // send message
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">${username} : &nbsp;</span>
+        <span class="tagged">@help</span> ${message}
+      </div>`;
+
+    // bot response
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">Help : &nbsp;</span>
+        <br>
+        Usage: @calculator [expression]
+      </div>`;
+
+    scrollToBottom();
+  }
+  // translator bot help
+  else if (message === "translator") {
+    // send message
+    chatBox.innerHTML += `
+        <div class="send-message">
+          <span class="username">${username} : &nbsp;</span>
+          <span class="tagged">@help</span> ${message}
+        
+        </div>`;
+
+    // bot response
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">Help : &nbsp;</span>
+        <br>
+        Usage: @translator [language] [text]
+        <br>
+        <br>
+        <span style="font-weight: bolder;">Supported Languages:</span> ${Object.values(ISO_639_1).map(language => language+" ").join('')}
+      </div>`;
+  }
+  // compiler bot help 
+  else if (message === "compiler") {
+    // send message
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">${username} : &nbsp;</span>
+        <span class="tagged">@help</span> ${message}
+      </div>`;
+
+    // bot response
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">Help : &nbsp;</span>
+        <br>
+        Usage: @compiler [language] [code]
+      </div>`;
+
+    scrollToBottom();
+  }
+
+  // invalid help
+  else {
+    console.log("unable to recognize your problem");
+  }
+}
 
 // convert language name into 2 letter code
 function get2LetterCode(fullLanguageName) {
