@@ -4,13 +4,28 @@ const chatBox = document.getElementById("chats");
 // calculator bot
 async function calculator(parsedMessage, parsedUsername, data, ) {
 
+  // get the expression
   let expression = await parsedMessage.replace(/^@\S+\s/, "");
 
+  // fetch the bot response
   fetch(`https://incognitotalk-bots.onrender.com/calculate?expression=${encodeURIComponent(expression)}`)
     .then(response => response.text())
     .then(data => {
-      chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
-      chatBox.innerHTML += `<div class="send-message"><span class="username">Calculator : &nbsp;</span>${data} </div>`;
+      // send message
+      chatBox.innerHTML += `
+        <div class="send-message">
+          <span class="username">${parsedUsername} : &nbsp;</span>
+          <span class="tagged">@calculator </span>
+          ${expression}
+        </div>`;
+
+      // bot response
+      chatBox.innerHTML += `
+        <div class="send-message">
+          <span class="username">Calculator : &nbsp;</span>
+          ${data}
+         </div>`;
+
       scrollToBottom();
     })
     .catch(error => console.error(error));
@@ -31,17 +46,45 @@ async function translator(parsedMessage, parsedUsername) {
   // if requested for supported_languages
   if (requestedLang === "supported_languages") {
     // handle unsupported language 
-    chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
-    chatBox.innerHTML += `<div class="send-message"><span class="username">Translator : &nbsp;</span><br>Supported Languages: ${Object.values(ISO_639_1).map(language => language+" ")}</div>`;
+
+    // send message
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">${parsedUsername} : &nbsp;</span>
+        <span class="tagged">@translator</span> ${message} 
+      </div>`;
+
+    // bot response
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">Translator : &nbsp;</span>
+        <br>
+        Supported Languages: ${Object.values(ISO_639_1).map(language => language+" ")}
+      </div>`;
 
     scrollToBottom();
   }
 
   // if requested language is not valid
   else if (!translateLang) {
-    // handle unsupported language 
-    chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
-    chatBox.innerHTML += `<div class="send-message"><span class="username">Translator : &nbsp;</span><br>Language not supported (${requestedLang})<br>Try @translator supported_languages</div>`;
+    // handle unsupported language
+    // send message 
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">${parsedUsername} : &nbsp;</span>
+        <span class="tagged">@translator</span> ${message} 
+      </div>`;
+
+    // bot response
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">Translator : &nbsp;</span>
+        <br>
+        Language not supported (${requestedLang})
+        <br>
+        Try @translator supported_languages
+      </div>`;
+
     scrollToBottom();
   }
 
@@ -53,8 +96,22 @@ async function translator(parsedMessage, parsedUsername) {
       .then(res => res.json())
       .then(data => {
         // handle translator bot response
-        chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
-        chatBox.innerHTML += `<div class="send-message"><span class="username">Translator : &nbsp;</span>${data[0][0][0]} </div>`;
+
+        // send message
+        chatBox.innerHTML += `
+          <div class="send-message">
+            <span class="username">
+            ${parsedUsername} : &nbsp;</span>
+            <span class="tagged">@translator</span> ${message} 
+          </div>`;
+
+        // bot response
+        chatBox.innerHTML += `
+          <div class="send-message">
+            <span class="username">Translator : &nbsp;</span>
+            ${data[0][0][0]} 
+          </div>`;
+
         scrollToBottom();
       })
       .catch(error => {
@@ -99,9 +156,30 @@ async function compiler(parsedMessage, parsedUsername) {
       .then(async (data) => {
         // wrap message in pre and code elements
         code = await stringifyHTML(code);
-        chatBox.innerHTML += `<span class="username">${parsedUsername} : &nbsp;</span>@compiler ${programmingLang.trimStart()}<pre class="code-block"><code class="language-javascript">${code}</code></pre>`;
-        chatBox.innerHTML += `<div class="send-message"><span class="username">${programmingLang} : &nbsp;</span><br>Output: ${data.stdout}<br>Error: ${data.stderr}<br>Status: ${data.statusMes}  </div>`;
 
+        // send message 
+        chatBox.innerHTML += `
+          <span class="username">${parsedUsername} : &nbsp;</span>
+          <span class="tagged">@compiler</span> ${programmingLang.trimStart()}
+          <pre class="code-block">
+            <code class="language-javascript">
+            ${code}
+            </code>
+          </pre>`;
+
+        // bot response
+        chatBox.innerHTML += `
+          <div class="send-message">
+            <span class="username">${programmingLang} : &nbsp;</span>
+            <br>
+            Output: ${data.stdout}
+            <br>
+            Error: ${data.stderr}
+            <br>
+            Status: ${data.statusMes}  
+          </div>`;
+
+        // highlight the code with codeBox
         Prism.highlightAll();
 
         scrollToBottom();
@@ -110,8 +188,22 @@ async function compiler(parsedMessage, parsedUsername) {
         console.error(error);
       });
   } else {
-    chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
-    chatBox.innerHTML += `<div class="send-message"><span class="username">Compiler : &nbsp;</span><br>Programming language not supported<br>Usage: @compiler [c, cpp, python, java] [code]</div>`;
+    // send message
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">${parsedUsername} : &nbsp;</span>
+        <span class="tagged">@compiler</span> ${message} 
+      </div>`;
+
+    // bot response
+    chatBox.innerHTML += `
+      <div class="send-message">
+        <span class="username">Compiler : &nbsp;</span>
+        <br>
+        Programming language not supported
+        <br>
+        Usage: @compiler [c, cpp, python, java] [code]
+      </div>`;
   }
 
 }
