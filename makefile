@@ -1,7 +1,7 @@
 main: create-build-directory home-server socket-server port-forwarding-service main-app compile-home-app 
 
 create-build-directory:
-	mkdir -p build/ build/home/ build/home/inct-app-linux-x64 build/home/inct-app-win32-x64 build/main/ build/server/ build/server/chat/ build/server/socket/ build/server/home/ build/server/port-forwarding-service/
+	mkdir -p build/ build/home/ build/home/inct-app-linux-x64 build/home/inct-app-win32-x64 build/main/ build/server/ build/server/socket/ build/server/home/ build/server/port-forwarding-service/
 
 home-server:
 	pkg src/server/home/home-server.js && mv home-server-* build/server/home/ 
