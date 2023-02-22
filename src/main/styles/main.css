@@ -186,5 +186,6 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .tagged{
-  background-color: rgba(0, 102, 255, 0.697);
+  background-color: rgba(113, 120, 255, 0.6);
+  border-radius: 5px;
 }
