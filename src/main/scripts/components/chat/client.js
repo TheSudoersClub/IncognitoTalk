@@ -125,41 +125,36 @@ function handleMessage(chatBox) {
       const [match, parsedUsername, parsedMessage] = data.match(pattern);
 
       // tagged message
-      if (parsedMessage.startsWith("@")) {
+      if (hasUsernameTag(parsedMessage)) {
 
-        // remove @ from parsedMessage
-        const pattern = /@(\w+)/;
-        const match = await parsedMessage.match(pattern);
+        const taggedUsernames = extractUsernames(parsedMessage);
 
         // if message is tagged to user
-        if (match[1] === username) {
-          chatBox.innerHTML += `<div class="send-message tagged-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage} </div>`;
+        if (taggedUsernames.includes(username)) {
+          chatBox.innerHTML += `<div class="send-message tagged-message"><span class="username">${parsedUsername} : &nbsp;</span>${replaceUsernameTags(parsedMessage)} </div>`;
         }
-
-        // tagged bots 
-        else if (bots.includes(match[1])) {
-
+        // if message is tagged to another client
+        else {
           // calculator bot
-          if (match[1] == 'calculator') {
+          if (parsedMessage.startsWith('@calculator')) {
             await calculator(parsedMessage, parsedUsername, data);
           }
 
           // translator bot
-          else if (match[1] == 'translator') {
+          else if (parsedMessage.startsWith('@translator')) {
             await translator(parsedMessage, parsedUsername);
           }
 
           // compiler bot
-          else if (match[1] == 'compiler') {
+          else if (parsedMessage.startsWith('@compiler')) {
             await compiler(parsedMessage, parsedUsername);
           }
 
           // helper bot (local scoped)
-        }
+          else {
+            chatBox.innerHTML += `<div class="send-message">${data}</div>`;
+          }
 
-        // if message is tagged to another client
-        else {
-          chatBox.innerHTML += `<div class="send-message">${data}</div>`;
         }
 
         // reset string

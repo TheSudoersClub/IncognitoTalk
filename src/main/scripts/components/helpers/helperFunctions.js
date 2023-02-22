@@ -63,3 +63,42 @@ function validateUsername(username) {
     // return validation result
     return regex.test(username)
 }
+
+// check weather the message contains the tags (@username)
+function hasUsernameTag(sentence) {
+    // Create a regular expression pattern to match the username tag
+    const usernamePattern = /@(\w+)/g;
+
+    // Use the `test` method of the pattern to check if there is at least one match in the input sentence
+    const hasMatch = usernamePattern.test(sentence);
+
+    // Return the boolean value indicating whether there is at least one match
+    return hasMatch;
+}
+
+// get the tags from the message
+function extractUsernames(sentence) {
+    // Create a regular expression pattern to match the username tag
+    const usernamePattern = /@(\w+)/g;
+
+    // Use the `matchAll` method of the input sentence to find all instances of the username tag
+    const matches = sentence.matchAll(usernamePattern);
+
+    // Map the matches to an array of usernames
+    const usernames = [...matches].map(match => match[1]);
+
+    // Return the array of usernames
+    return usernames;
+}
+
+// replace the @username with span tag
+function replaceUsernameTags(sentence) {
+    // Create a regular expression pattern to match the username tag
+    const usernamePattern = /@(\w+)/g;
+
+    // Replace all instances of the username tag with the HTML span element
+    const replacedSentence = sentence.replace(usernamePattern, '<span class="tagged">@$1</span>');
+
+    // Return the replaced sentence
+    return replacedSentence;
+}
