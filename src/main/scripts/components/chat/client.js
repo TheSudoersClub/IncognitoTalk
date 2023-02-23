@@ -130,7 +130,7 @@ function handleMessage(chatBox) {
         const taggedUsernames = extractUsernames(parsedMessage);
 
         // if message is tagged to user - highlight the whole message for tagged users
-        if (taggedUsernames.includes(username)) {
+        if (taggedUsernames.includes(username) || taggedUsernames.includes("everyone")) {
           chatBox.innerHTML += `<div class="send-message tagged-message"><span class="username">${parsedUsername} : &nbsp;</span>${replaceUsernameTags(parsedMessage)} </div>`;
         }
 
