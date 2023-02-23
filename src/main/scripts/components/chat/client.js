@@ -129,12 +129,18 @@ function handleMessage(chatBox) {
 
         const taggedUsernames = extractUsernames(parsedMessage);
 
-        // if message is tagged to user
+        // if message is tagged to user - highlight the whole message for tagged users
         if (taggedUsernames.includes(username)) {
           chatBox.innerHTML += `<div class="send-message tagged-message"><span class="username">${parsedUsername} : &nbsp;</span>${replaceUsernameTags(parsedMessage)} </div>`;
         }
-        // if message is tagged to another client
-        else {
+
+        // if message is tagged to another client - highlight tags
+        else if (clients.some(item => taggedUsernames.includes(item))) {
+          chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${replaceUsernameTags(parsedMessage)} </div>`;
+        }
+
+        // bots
+        else if (clients.some(item => taggedUsernames.includes(item))) {
           // calculator bot
           if (parsedMessage.startsWith('@calculator')) {
             await calculator(parsedMessage, parsedUsername, data);
@@ -151,10 +157,12 @@ function handleMessage(chatBox) {
           }
 
           // helper bot (local scoped)
-          else {
-            chatBox.innerHTML += `<div class="send-message">${data}</div>`;
-          }
 
+        }
+
+        // normal message
+        else {
+          chatBox.innerHTML += `<div class="send-message"><span class="username">${parsedUsername} : &nbsp;</span>${parsedMessage}</div>`;
         }
 
         // reset string
