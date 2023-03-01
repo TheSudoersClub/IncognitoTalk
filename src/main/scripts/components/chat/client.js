@@ -140,7 +140,7 @@ function handleMessage(chatBox) {
         }
 
         // bots
-        else if (clients.some(item => taggedUsernames.includes(item))) {
+        else if (bots.some(item => taggedUsernames.includes(item))) {
           // calculator bot
           if (parsedMessage.startsWith('@calculator')) {
             await calculator(parsedMessage, parsedUsername, data);
@@ -214,6 +214,7 @@ async function sendMessage() {
     if (message.startsWith("@help")) {
       await help(message, username)
     }
+
     // handle normal message
     else if (message != "") {
       // sent encrypted message to socket server
